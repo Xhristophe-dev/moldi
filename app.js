@@ -2,12 +2,11 @@ try{['cards','v2','theme','aim'].forEach(k=>{const o='estudo_'+k,n='estudofacil.
 const TABS=[['home','Início','home'],['learn','Aprender','book'],['cards','Criar','pen'],['study','Estudar','cards'],['quiz','Quiz','quiz'],['math','Matemática','math'],['pomo','Pomodoro','timer'],['profile','Perfil','user']];
 const MODES=[['foco','Foco'],['curta','Pausa curta'],['longa','Pausa longa']];
 const DAYS=[0,1,3,7,14,30],MC={foco:'var(--ac)',curta:'var(--ok)',longa:'#9DB4F2'},MT={foco:'var(--act)',curta:'var(--onp)',longa:'var(--onp)'};
-let q2='',edId=null,PV=null,lastCat='',catF='',cards=[],tab='home',cur=null,shown=false,ses={g:0,n:0,hit:0,p:0},UNDO=null,FR=null,EDC=false,Q=[],quiz=null,score={ok:0,n:0};
-let T={foco:25,curta:5,longa:15},M=10,L={},NEWMAX=20,NX=0,NXd=0;
+let q2='',edId=null,PV=null,lastCat='',catF='',cards=[],tab='home',cur=null,shown=false,ses={g:0,n:0,hit:0,p:0},UNDO=null,Q=[],quiz=null,score={ok:0,n:0};
+let T={foco:25,curta:5,longa:15},M=10,L={};
 let P={mode:'foco',left:25*60,running:false,end:0};
-/* ===== CONFIGURE AQUI ===== */
-const CONTATO='moldicontato@gmail.com';   /* e-mail de contato mostrado no rodapé */
-const IMGDIR='img/'; /* pasta das imagens (ao lado do index.html) */
+const CONTATO='moldicontato@gmail.com';  
+const IMGDIR='img/';
 const $=s=>document.querySelector(s);
 const IC={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',moon:'<path d="M20 14A8 8 0 0110 4a8 8 0 1010 10z"/>',home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',cards:'<rect x="3" y="7" width="13" height="13"/><path d="M7 7V3h14v14h-5"/>',pen:'<path d="M4 20h4L20 8l-4-4L4 16z"/>',ai:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/>',quiz:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 0c0 2-2.5 2-2.5 4M12 17v.01"/>',math:'<path d="M18 4H6l7 8-7 8h12"/>',timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',flame:'<path d="M12 3c1 4 6 6 6 11a6 6 0 01-12 0c0-3 2-4 3-6 1 2 2 2 3-5z"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',check:'<path d="M4 12l5 5 11-11"/>',x:'<path d="M5 5l14 14M19 5L5 19"/>',book:'<path d="M4 4h7a2 2 0 012 2v14a2 2 0 00-2-2H4zM20 4h-7v16h7z"/>',menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>',plus:'<path d="M12 5v14M5 12h14"/>',mind:'<circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="20" r="2"/><path d="M10 10L6.5 7.5M14 10l3.5-2.5M12 15v3"/>',repeat:'<path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 013-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 01-3 3H3"/>',save:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',trophy:'<path d="M8 4h8v5a4 4 0 01-8 0zM8 6H4v1a3 3 0 003 3M16 6h4v1a3 3 0 01-3 3M12 13v4M8 21h8M10 17h4"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',more:'<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>'};
 const ic=(n,z=20)=>`<svg width="${z}" height="${z}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex:none">${IC[n]}</svg>`;
@@ -21,14 +20,14 @@ const hit=o=>day(o).rev>=M;
 function streak(f){let o=f(0)?0:1,n=0;while(f(o)){n++;o++}return n}
 const pool=()=>cards.filter(c=>!catF||c.cat===catF);
 const cats=()=>[...new Set(cards.map(c=>c.cat))];
-function load(){try{const s=localStorage.getItem('estudofacil.cards');if(s)cards=JSON.parse(s);const v=localStorage.getItem('estudofacil.v2');if(v){const o=JSON.parse(v);M=o.M||M;L=o.L||{};if(o.T)for(const k of ['foco','curta','longa'])if(+o.T[k]>0)T[k]=+o.T[k];if(typeof o.N==='number')NEWMAX=Math.max(0,o.N);for(const k in L)if(L[k]&&k!==dk())delete L[k].u}}catch(e){}
-cards.forEach(c=>{c.cat=c.cat||'Geral';if((c.due>0||c.box>0)&&!c.sn)c.r=1});P.left=dur('foco')}
-function save(){try{localStorage.setItem('estudofacil.cards',JSON.stringify(cards));localStorage.setItem('estudofacil.v2',JSON.stringify({M,L,T,N:NEWMAX}))}catch(e){saveFail()}}
+function load(){try{const s=localStorage.getItem('estudofacil.cards');if(s)cards=JSON.parse(s);const v=localStorage.getItem('estudofacil.v2');if(v){const o=JSON.parse(v);M=o.M||M;L=o.L||{};if(o.T)for(const k of ['foco','curta','longa'])if(+o.T[k]>0)T[k]=+o.T[k]}}catch(e){}
+cards.forEach(c=>c.cat=c.cat||'Geral');P.left=dur('foco')}
+function save(){try{localStorage.setItem('estudofacil.cards',JSON.stringify(cards));localStorage.setItem('estudofacil.v2',JSON.stringify({M,L,T}))}catch(e){saveFail()}}
 function saveFail(){if(saveFail.s)return;saveFail.s=1;setTimeout(()=>toast('Não consegui salvar neste navegador. Baixe um backup para não perder seus dados.','Baixar',bkExport),0)}
 const curDark=()=>{const t=document.documentElement.dataset.theme;return t?t==='dark':matchMedia('(prefers-color-scheme:dark)').matches};
 function toggleTheme(){const t=curDark()?'light':'dark';document.documentElement.classList.add('tt');setTimeout(()=>document.documentElement.classList.remove('tt'),450);document.documentElement.dataset.theme=t;try{localStorage.setItem('estudofacil.theme',t)}catch(e){}document.querySelectorAll('[data-tb]').forEach(b=>b.innerHTML=ic(t==='dark'?'sun':'moon',22))}
 function drawer(o){document.body.classList.toggle('open',!!o)}
-function go(t){tab=t;shown=false;drawer(0);scrollTo(0,0);if(t==='study'){ses={g:0,n:0,hit:0,p:0};UNDO=null;FR=null;Q=[];pick()}if(t==='quiz')nextQ(true);render();enter()}
+function go(t){tab=t;shown=false;drawer(0);scrollTo(0,0);if(t==='study'){ses={g:0,n:0,hit:0,p:0};UNDO=null;Q=[];pick()}if(t==='quiz')nextQ(true);render();enter()}
 /* Transição suave ao trocar de aba */
 function enter(){if(tab==='home')return;['#th','#view'].forEach(s=>{const e=$(s);e.classList.remove('enter');void e.offsetWidth;e.classList.add('enter')})}
 /* Logo do Moldi: arquivo img/logo.webp (a imagem já contém o nome, então não se escreve "Moldi" ao lado).
@@ -38,7 +37,7 @@ function nav(){if(catF&&!cats().includes(catF))catF='';
 $('#dr').innerHTML=`<div class="t">${LOGOW(56)}</div>`+TABS.map(([k,l,i])=>`<button class="${tab===k?'on':''}" onclick="go('${k}')">${ic(i)}${l}</button>`).join('');
 document.querySelector('main').classList.toggle('wide',tab==='home'||tab==='profile');
 $('#tn').innerHTML=`<span class="lg">${LOGOW(60)}</span>`+[['home','Início'],['learn','Aprender'],['study','Estudar'],['quiz','Quiz'],['pomo','Pomodoro'],['profile','Perfil']].map(([k,l])=>`<button class="l ${tab===k?'on':''}" onclick="go('${k}')">${l}</button>`).join('')+`<button class="l ib" data-tb onclick="toggleTheme()" aria-label="Alternar tema"></button><button class="l ib" onclick="drawer(1)" aria-label="Abrir menu">${ic('menu',24)}</button>`;
-{const f=$('#fab'),d=dueN();f.hidden=tab==='study';f.innerHTML=ic('cards',22)+' Estudar'+(d?' · '+d:'')}
+{const f=$('#fab'),d=cards.filter(x=>x.due<=today()).length;f.hidden=tab==='study';f.innerHTML=ic('cards',22)+' Estudar'+(d?' · '+d:'')}
 {const th=TH[tab];$('#th').innerHTML=th?`<div class="th"><div><b>${th[1]}</b><span>${th[2]}</span></div>${IMG(th[0],'Ilustração da aba '+TABS.find(x=>x[0]===tab)[1])}</div>`:''}
 $('#ttl').textContent=TABS.find(x=>x[0]===tab)[1];document.querySelectorAll('[data-tb]').forEach(b=>b.innerHTML=ic(curDark()?'sun':'moon',22));
 const show=['cards','study','quiz'].includes(tab)&&cats().length;
@@ -57,10 +56,7 @@ $('#lst').innerHTML=l.length?l.map(c=>c.id===edId?`<div class="item" style="disp
 function saveEd(id){const c=cards.find(x=>x.id===id),q=$('#eq').value.trim(),a=$('#ea').value.trim();if(!c||!q||!a)return;c.q=q;c.a=a;c.cat=$('#ec').value.trim()||'Geral';edId=null;save();render()}
 function add(){const q=$('#q').value.trim(),a=$('#a').value.trim();if(!q||!a)return;const ct=getCat();cards.push(mk(q,a,ct));lastCat=ct;save();render();$('#q').focus()}
 function del(id){const i=cards.findIndex(c=>c.id===id);if(i<0)return;const c=cards[i];cards.splice(i,1);save();render();toast('Cartão apagado','Desfazer',()=>{cards.splice(Math.min(i,cards.length),0,c);save();render()})}
-/* ===== Imagens: coloque os arquivos na pasta img/ =====
-   hero-lua.webp  -> topo da Home (à direita do título)
-   estudando.webp -> ao lado dos cards de "Continue estudando"
-   Se um arquivo não existir, fica só o espaço reservado (sem imagem quebrada). */
+/*Imagens:*/
 function imgFb(i){const d=document.createElement('div');d.className='ph';d.setAttribute('aria-hidden','true');i.replaceWith(d)}
 /* Aceita .webp ou .png. Tenta cada caminho de data-c (img/ antes da raiz, webp antes de png). Acabando a lista: placeholder (ph), remove (rm) ou texto da logo (logo) */
 function imgNext(i){const c=(i.dataset.c||'').split('|'),k=(+i.dataset.k||0)+1;if(k<c.length){i.dataset.k=k;i.src=c[k];return}
@@ -76,7 +72,7 @@ function revealIn(el,anim){el.classList.add('in');el.querySelectorAll('.bar i[da
 function reveal(){const e=[...document.querySelectorAll('#view .rv')];if(!('IntersectionObserver'in window)){e.forEach(x=>revealIn(x,false));return}
 const o=new IntersectionObserver(r=>r.forEach(x=>{if(x.isIntersecting){revealIn(x.target,true);o.unobserve(x.target)}}),{threshold:.1});e.forEach(x=>o.observe(x))}
 
-/* ===== Home: topo, painel (estatísticas), faixas estilo Netflix ===== */
+/* Home: topo, painel (estatísticas), faixas estilo Netflix*/
 /* Calendário mensal: só os números dos dias do mês, com cor conforme o estudo e setas para meses anteriores */
 let CALM=0;
 function calGo(n){CALM=Math.min(0,CALM+n);const e=$('#calc');if(e){e.outerHTML=calendar();const b=$('#calc '+(n<0?'.cp':'.cn'));if(b&&!b.disabled)b.focus()}}
@@ -101,11 +97,11 @@ clearTimeout(el._sp);el._sp=setTimeout(()=>{el.classList.remove('splat');b.remov
 function slime(el,fn){if(matchMedia('(prefers-reduced-motion:reduce)').matches){fn();return}
 if(el.dataset.go)return;el.dataset.go=1;splat(el);setTimeout(fn,460)}
 function vHome(){
-const t=day(),y=day(1),td=today(),goal=t.rev>=M,cel=goal&&!CEL[dk()]&&(CEL[dk()]=1),pct=Math.min(100,Math.round(t.rev/M*100)),due=dueN(),
+const t=day(),y=day(1),td=today(),goal=t.rev>=M,cel=goal&&!CEL[dk()]&&(CEL[dk()]=1),pct=Math.min(100,Math.round(t.rev/M*100)),due=cards.filter(x=>x.due<=td).length,
 sy=studied(1)?`Ontem você revisou <b>${y.rev}</b> cartões e fez <b>${y.p.foco}</b> ciclos de foco.`:(Object.keys(L).length?'Você não estudou ontem. Hoje é um bom dia para recomeçar!':'Bem-vindo! Estude ou crie cartões hoje para começar sua sequência.'),
 card=(b,s,g,i,x='')=>`<button class="sc" role="listitem" ${x} onclick="slime(this,()=>{${g}})"><i class="sl" aria-hidden="true"><i></i><i></i><i></i></i><em class="ci">${ic(i,22)}</em><b>${b}</b><span>${s}</span></button>`,
 strip=(h,it,side='')=>`<section class="sw rv"><h2>${h}</h2><div class="sr"><div class="sx"><div class="cgrid" role="list">${it}</div></div>${side}</div></section>`,
-mats=cats().map(c=>{const n=dueN(c);return card(esc(c),n?n+' para revisar':'Tudo em dia',"catF=this.dataset.c;go('study')",'book',`data-c="${esc(c)}"`)}).join('')+card('Aprender um tema','Gere seu estudo',"go('learn')",'spark')+card('Nova matéria','Crie cartões',"go('cards')",'plus'),
+mats=cats().map(c=>{const n=cards.filter(x=>x.cat===c&&x.due<=td).length;return card(esc(c),n?n+' para revisar':'Tudo em dia',"catF=this.dataset.c;go('study')",'book',`data-c="${esc(c)}"`)}).join('')+card('Aprender um tema','Gere seu estudo',"go('learn')",'spark')+card('Nova matéria','Crie cartões',"go('cards')",'plus'),
 tec=[['Pomodoro','25 min de foco','pomo','timer'],['Flashcards','Pergunta e resposta','study','cards'],['Revisão espaçada','De 1 a 30 dias','study','repeat'],['Quiz','Teste o que sabe','quiz','quiz'],['Matemática','Treino e calculadora','math','math']].map(([a,b,g,i])=>card(a,b,`go('${g}')`,i)).join(''),
 hero=`<section class="hero rv"><div><span class="hello">${PF.name?'Olá, '+esc(PF.name)+'!':'Olá, bom te ver por aqui'}</span><h2>Estude com foco e constância.</h2><p>Revise no seu ritmo e acompanhe seu progresso, um passo de cada vez.</p><button class="btn" onclick="go('study')">Começar a estudar${due?' ('+due+')':''}</button></div>${I_LUA()}</section>`,
 dash=`<section class="rv"><h2 style="font-size:20px;margin:0 0 10px">Seu painel</h2><div class="dash">
@@ -119,7 +115,10 @@ $('#view').innerHTML=hero+guide+dash+strip('Continue estudando',mats,`<div class
 
 let TOP=[];try{TOP=JSON.parse(localStorage.getItem('estudofacil.topics')||'[]')}catch(e){}
 function saveT(){try{localStorage.setItem('estudofacil.topics',JSON.stringify(TOP))}catch(e){saveFail()}}
-let LS={t:'',n:'iniciante',o:'aprender do zero',p:'',open:null};
+let LS={t:'',n:'iniciante',o:'aprender do zero',p:'',r:'',open:null};
+try{const x=JSON.parse(localStorage.getItem('estudofacil.learn')||'{}');['t','n','o','p','r'].forEach(k=>{if(typeof x[k]==='string')LS[k]=x[k]})}catch(e){}
+/* guarda tema, prompt e a resposta colada: se o celular recarregar a página enquanto você usa a IA, nada se perde */
+function saveLS(){try{localStorage.setItem('estudofacil.learn',JSON.stringify({t:LS.t,n:LS.n,o:LS.o,p:LS.p,r:LS.r}))}catch(e){}}
 const NIV=['iniciante','intermediário','avançado'],OBJ=['aprender do zero','me preparar para uma prova','revisar o que já sei','me aprofundar'];
 const opts=(a,v)=>a.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('');
 const SUG=['Frações','Revolução Francesa','Crase','Fotossíntese','Juros compostos'];
@@ -129,8 +128,8 @@ $('#view').innerHTML=`<div class="box"><h2>${ic('spark',20)} O que você quer ap
 <div class="chips">${SUG.map(x=>`<button class="chip" onclick="$('#Lt').value=this.textContent;$('#Lt').focus()">${x}</button>`).join('')}</div>
 <div class="mut">Seu nível</div><select id="Ln" aria-label="Nível">${opts(NIV,LS.n)}</select><div class="mut">Seu objetivo</div><select id="Lo" aria-label="Objetivo">${opts(OBJ,LS.o)}</select>
 <button class="btn" onclick="lGen()">Gerar prompt</button></div>
-${LS.p?`<div class="box"><h2>1. Copie e cole na sua IA</h2><textarea id="Lp" aria-label="Prompt para copiar" rows="6" readonly>${esc(LS.p)}</textarea><button class="btn" onclick="lCopy()">Copiar prompt</button><div class="mut" style="margin-top:10px">Abrir: <a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a> · <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> · <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> · <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">Copilot</a>. Os planos gratuitos delas costumam bastar, mas têm limites.</div></div>
-<div class="box"><h2>2. Cole a resposta aqui</h2><textarea id="Lr" aria-label="Resposta da IA" rows="6" placeholder="Cole aqui tudo o que a IA devolveu"></textarea><button class="btn" onclick="lBuild()">Montar meu estudo</button><div id="Lm" class="mut" style="margin-top:8px"></div></div>`:''}
+${LS.p?`<div class="box"><h2>1. Copie e cole na sua IA</h2><textarea id="Lp" aria-label="Prompt para copiar" rows="6" readonly>${esc(LS.p)}</textarea><button class="btn" onclick="lCopy()">Copiar prompt</button><div class="mut" style="margin-top:10px">Abrir: <a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a> · <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> · <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> · <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">Copilot</a>. Os planos gratuitos delas costumam bastar, mas têm limites.</div></div>`:''}
+<div class="box"><h2>${LS.p?'2. Cole a resposta aqui':'Já tem a resposta da IA?'}</h2>${LS.p?'':'<div class="mut" style="margin-bottom:8px">Se você já pediu o conteúdo para a IA, cole aqui o que ela devolveu e monte os flashcards e o quiz, sem gerar um prompt novo.</div>'}<textarea id="Lr" aria-label="Resposta da IA" rows="6" placeholder="Cole aqui tudo o que a IA devolveu" oninput="LS.r=this.value;saveLS()">${esc(LS.r)}</textarea><div class="row"><button class="btn gh" onclick="lPaste()">Colar</button><button class="btn" onclick="lBuild()">Montar meu estudo</button></div><div id="Lm" class="mut" style="margin-top:8px"></div></div>
 ${TOP.length?`<div class="box"><h2>Meus estudos</h2>${TOP.map((t,i)=>`<div class="item" role="button" tabindex="0" onclick="LS.open=${i};vLearn()" onkeydown="if(event.key==='Enter')this.click()" style="cursor:pointer"><div style="flex:1"><b>${esc(t.titulo)}</b><br><span class="mut">${t.cartoes.length} cartões · ${t.quiz.length} questões${t.best!=null?' · melhor: '+t.best+'/'+t.quiz.length:''}</span></div><span class="mut">›</span></div>`).join('')}</div>`:''}`}
 function lPrompt(t){return `Você é um professor experiente, paciente e didático. Crie flashcards e um quiz para estudar sobre: "${t}".
 
@@ -148,9 +147,10 @@ Responda SOMENTE com um JSON válido, sem nenhum texto antes ou depois, exatamen
 {"titulo":"...","resumo":"resumo em 1 ou 2 frases","aviso":"","cartoes":[{"q":"pergunta","a":"resposta"}],"quiz":[{"p":"pergunta","opcoes":["A","B","C","D"],"correta":0,"explicacao":"..."}]}
 O campo "correta" é o número da alternativa certa, começando em 0.`}
 function lRead(){const t=$('#Lt').value.trim().replace(/"/g,"'");LS.n=$('#Ln').value;LS.o=$('#Lo').value;LS.t=t;if(!t)toast('Digite o tema que você quer estudar');return t}
-function lGen(){const t=lRead();if(!t)return;LS.p=lPrompt(t);vLearn()}
-function lCopy(){const f=()=>{$('#Lp').select();document.execCommand('copy');toast('Prompt copiado')};try{navigator.clipboard.writeText(LS.p).then(()=>toast('Prompt copiado'),f)}catch(e){f()}}
-const KEYS='titulo|resumo|aviso|explicacao|cartoes|q|a|quiz|p|opcoes|correta';
+function lGen(){const t=lRead();if(!t)return;LS.p=lPrompt(t);saveLS();vLearn()}
+function lCopy(){const f=()=>{const e=$('#Lp');e.focus();e.select();try{e.setSelectionRange(0,e.value.length)}catch(x){}let k=false;try{k=document.execCommand('copy')}catch(x){}toast(k?'Prompt copiado':'Não consegui copiar: segure no texto e escolha Copiar')};try{navigator.clipboard.writeText(LS.p).then(()=>toast('Prompt copiado'),f)}catch(e){f()}}
+/* botão Colar: lê a área de transferência (o celular pode pedir permissão; se negar, é só segurar na caixa e escolher Colar) */
+function lPaste(){const ok=t=>{$('#Lr').value=t;LS.r=t;saveLS();toast('Colado')},no=()=>toast('Segure o dedo na caixa e escolha Colar');try{navigator.clipboard.readText().then(t=>t&&t.trim()?ok(t):no(),no)}catch(e){no()}}
 function fixJ(j){const st=[];let o='',s=false,key=false,prev='';
 for(let i=0;i<j.length;i++){const c=j[i];
 if(!s){o+=c;if(c==='"'){s=true;key=st[st.length-1]==='o'&&(prev==='{'||prev===',')}else if(c==='{'||c==='[')st.push(c==='{'?'o':'a');else if(c==='}'||c===']')st.pop();if(!/\s/.test(c))prev=c;continue}
@@ -162,14 +162,33 @@ else close=/^\s*[}\]]\s*([,}\]]|$)/.test(r)||(st[st.length-1]==='o'?new RegExp('
 if(close){o+=c;s=false;prev='"'}else o+='\\"';continue}
 o+=c}
 return o}
-function jparse(raw){const a=raw.indexOf('{'),b=raw.lastIndexOf('}');if(a<0||b<a)throw{m:'não achei um JSON na resposta'};const j=raw.slice(a,b+1);
-try{return JSON.parse(j)}catch(e){try{return JSON.parse(fixJ(j))}catch(e2){const m=String(e.message),pm=m.match(/position (\d+)/),lm=m.match(/line (\d+) column (\d+)/);let p=-1;if(pm)p=+pm[1];else if(lm)p=j.split('\n').slice(0,lm[1]-1).reduce((n,x)=>n+x.length+1,0)+(+lm[2]-1);throw{m:p>=0?'erro perto de: "…'+j.slice(Math.max(0,p-40),p+40).replace(/\s+/g,' ')+'…"':m.slice(0,120)}}}}
-function cp(t){const f=()=>{const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();toast('Copiado')};try{navigator.clipboard.writeText(t).then(()=>toast('Copiado'),f)}catch(e){f()}}
-function lParse(raw){const d=jparse(raw)||{},S=x=>String(x==null?'':x),A=x=>Array.isArray(x)?x:[];
-const t={id:Date.now(),titulo:S(d.titulo||LS.t),resumo:S(d.resumo),aviso:S(d.aviso),best:null,cartoes:A(d.cartoes).filter(x=>x&&x.q&&x.a).map(x=>({q:S(x.q),a:S(x.a)})),quiz:A(d.quiz).filter(q=>q&&q.p&&A(q.opcoes).length>1).map(q=>({p:S(q.p),opcoes:q.opcoes.map(S),correta:+q.correta||0,explicacao:S(q.explicacao)}))};
+/* nomes de campos que o reparo de aspas usa para saber onde um texto termina */
+const KEYS='titulo|resumo|aviso|explicacao|explicação|cartoes|cartões|flashcards|q|a|pergunta|resposta|frente|verso|quiz|questoes|questões|perguntas|p|questao|questão|opcoes|opções|alternativas|correta|gabarito';
+/* Leitor da resposta da IA (feito para o que chega do celular): ignora texto antes e depois do JSON, espaços especiais,
+   aspas curvas, vírgulas sobrando, quebras de linha e aspas dentro dos textos, e aproveita respostas cortadas no meio */
+function jclean(t){return String(t).replace(/[\u200b-\u200d\u2060\ufeff]/g,'').replace(/[\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000]/g,' ')}
+function jstart(t){for(let i=0;i<t.length;i++){if(t[i]==='{')return i;if(t[i]==='['&&/^\[\s*[{[]/.test(t.slice(i,i+40)))return i}return -1}
+function jtrail(t){let o='',s=false;for(let i=0;i<t.length;i++){const c=t[i];if(s){o+=c;if(c==='\\')o+=t[++i]||'';else if(c==='"')s=false;continue}if(c==='"'){s=true;o+=c;continue}if(c===','){let k=i+1;while(k<t.length&&/\s/.test(t[k]))k++;if(t[k]==='}'||t[k]===']')continue}o+=c}return o}
+function jbal(t){const a=jstart(t);if(a<0)return null;const st=[];let s=false;for(let i=a;i<t.length;i++){const c=t[i];if(s){if(c==='\\')i++;else if(c==='"')s=false;continue}if(c==='"'){s=true;continue}if(c==='{'||c==='[')st.push(c);else if(c==='}'||c===']'){st.pop();if(!st.length)return t.slice(a,i+1)}}return null}
+function jsalv(t){const a=jstart(t);if(a<0)return null;const st=[];let s=false,cut=-1,cs=null;for(let i=a;i<t.length;i++){const c=t[i];if(s){if(c==='\\')i++;else if(c==='"')s=false;continue}if(c==='"'){s=true;continue}if(c==='{'||c==='[')st.push(c);else if(c==='}'||c===']'){st.pop();if(st.length<=2){cut=i+1;cs=st.slice()}}}if(cut<0)return null;return t.slice(a,cut)+cs.reverse().map(x=>x==='{'?'}':']').join('')}
+function jparse(raw){jparse.cut=false;const t0=jclean(raw),a=jstart(t0);if(a<0)throw{m:'não achei um JSON na resposta'};
+const cv=t0.replace(/[“”„‟]/g,'"'),vs=[t0];if(cv!==t0)vs.push(cv);if(!/"/.test(cv))vs.push(cv.replace(/'/g,'"'));
+const tryP=x=>{for(const f of [y=>y,jtrail,y=>jtrail(fixJ(y))]){try{return JSON.parse(f(x))}catch(e){}}};
+for(const v of vs){const o=jstart(v),e=Math.max(v.lastIndexOf('}'),v.lastIndexOf(']'));for(const x of [jbal(v),e>o?v.slice(o,e+1):null]){if(!x)continue;const r=tryP(x);if(r!==undefined)return r}}
+for(const v of vs){const x=jsalv(v);if(x){const r=tryP(x);if(r!==undefined){jparse.cut=true;return r}}}
+const j=jbal(t0)||t0.slice(a);let m='';try{JSON.parse(j)}catch(e){m=String(e.message)}
+const pm=m.match(/position (\d+)/),lm=m.match(/line (\d+) column (\d+)/);let p=-1;if(pm)p=+pm[1];else if(lm)p=j.split('\n').slice(0,lm[1]-1).reduce((n,x)=>n+x.length+1,0)+(+lm[2]-1);
+throw{m:p>=0?'erro perto de: "…'+j.slice(Math.max(0,p-40),p+40).replace(/\s+/g,' ')+'…"':m.slice(0,120)}}
+function cp(t){const f=()=>{const x=document.createElement('textarea');x.value=t;x.style.cssText='position:fixed;left:0;top:0;opacity:0';document.body.appendChild(x);x.focus();x.select();try{x.setSelectionRange(0,t.length)}catch(e){}let k=false;try{k=document.execCommand('copy')}catch(e){}x.remove();toast(k?'Copiado':'Não consegui copiar')};try{navigator.clipboard.writeText(t).then(()=>toast('Copiado'),f)}catch(e){f()}}
+function jcorr(c,o){if(typeof c==='number')return c;const s=String(c==null?'':c).trim();if(/^\d+$/.test(s))return +s;const L=s.match(/^\(?([A-Da-d])[\).:]?$/);if(L)return L[1].toUpperCase().charCodeAt(0)-65;const k=o.findIndex(x=>x.trim().toLowerCase()===s.toLowerCase());return k>=0?k:0}
+function lParse(raw){const d0=jparse(raw)||{},S=x=>String(x==null?'':x),A=x=>Array.isArray(x)?x:[],G=(o,...k)=>{for(const n of k)if(o&&o[n]!=null)return o[n]};
+const d=Array.isArray(d0)?{cartoes:d0.filter(x=>x&&G(x,'q','pergunta')!=null&&G(x,'a','resposta')!=null),quiz:d0.filter(x=>x&&G(x,'p','pergunta')!=null&&G(x,'opcoes','opções','alternativas')!=null)}:d0;
+const t={id:Date.now(),titulo:S(d.titulo||LS.t),resumo:S(d.resumo),aviso:S(d.aviso),best:null,
+cartoes:A(G(d,'cartoes','cartões','flashcards')).map(x=>x&&{q:S(G(x,'q','pergunta','frente')),a:S(G(x,'a','resposta','verso'))}).filter(x=>x&&x.q&&x.a),
+quiz:A(G(d,'quiz','questoes','questões','perguntas')).map(q=>{if(!q)return null;const o=A(G(q,'opcoes','opções','alternativas')).map(S);return{p:S(G(q,'p','pergunta','questao','questão')),opcoes:o,correta:Math.min(Math.max(0,jcorr(G(q,'correta','resposta_correta','gabarito'),o)),Math.max(0,o.length-1)),explicacao:S(G(q,'explicacao','explicação'))}}).filter(q=>q&&q.p&&q.opcoes.length>1)};
 if(!t.cartoes.length&&!t.quiz.length)throw{m:'faltam os cartões e o quiz'};return t}
-function lSave(t){TOP.unshift(t);saveT();LS.p='';LS.open=0;vLearn()}
-function lBuild(){const raw=$('#Lr').value,bad=w=>{const t='Não consegui ler a resposta'+(w?' ('+w+')':'')+'. Costuma ser aspas duplas dentro de um texto.';LS.fix='A resposta que você enviou tem um erro de JSON'+(w?' ('+w+')':'')+'. Reenvie o JSON completo e corrigido: não use aspas duplas dentro dos textos (troque por aspas simples, inclusive em exemplos de JSON ou de código), não coloque quebras de linha dentro dos textos, não deixe vírgulas sobrando e não escreva nada fora do JSON.';$('#Lm').innerHTML=esc(t)+'<br><button class="btn gh" style="margin-top:8px" onclick="cp(LS.fix)">Copiar pedido de correção</button>'};let t;try{t=lParse(raw)}catch(e){bad(e.m);return}lSave(t)}
+function lSave(t){TOP.unshift(t);saveT();LS.p='';LS.r='';saveLS();LS.open=0;vLearn()}
+function lBuild(){const raw=$('#Lr').value;if(!raw.trim()){toast('Cole primeiro a resposta da IA');return}const bad=w=>{if(/não achei|faltam/.test(w||'')){$('#Lm').textContent='Não achei os flashcards e o quiz nessa resposta. Cole a resposta inteira da IA, do { do começo até o } do final.';return}const t='Não consegui ler a resposta'+(w?' ('+w+')':'')+'. Costuma ser aspas duplas dentro de um texto.';LS.fix='A resposta que você enviou tem um erro de JSON'+(w?' ('+w+')':'')+'. Reenvie o JSON completo e corrigido: não use aspas duplas dentro dos textos (troque por aspas simples, inclusive em exemplos de JSON ou de código), não coloque quebras de linha dentro dos textos, não deixe vírgulas sobrando e não escreva nada fora do JSON.';$('#Lm').innerHTML=esc(t)+'<br><button class="btn gh" style="margin-top:8px" onclick="cp(LS.fix)">Copiar pedido de correção</button>'};let t;try{t=lParse(raw)}catch(e){bad(e.m);return}const cut=jparse.cut;LS.r='';lSave(t);if(cut)toast('A resposta veio cortada: usei só a parte completa. Se faltou algo, peça para a IA continuar.')}
 /* Tela do estudo: resumo + flashcards + quiz */
 function vTopic(t){const i=TOP.indexOf(t);
 $('#view').innerHTML=`<button class="btn gh" onclick="LS.open=null;vLearn()" style="margin-bottom:14px">‹ Voltar</button>
@@ -190,7 +209,7 @@ function lAns(j){const t=TOP[LQ.i],n=LQ.list[LQ.k],q=t.quiz[n],g=j===q.correta;i
 document.querySelectorAll('.opt').forEach((b,x)=>{b.disabled=true;if(x===q.correta)b.classList.add('right');else if(x===j)b.classList.add('wrong')});
 $('#Lx').innerHTML=`<div class="box">${g?'Correto!':'Não foi dessa vez.'} ${esc(q.explicacao)}</div><button class="btn" onclick="LQ.k++;lQ()">${LQ.k+1<LQ.list.length?'Próxima':'Ver resultado'}</button>`}
 
-/* ===== Perfil: nome, resumo, últimos 7 dias, calendário, conquistas, preferências, backup ===== */
+/* Perfil: nome, resumo, últimos 7 dias, calendário, conquistas, preferências, backup */
 let PF={name:'',av:0};try{Object.assign(PF,JSON.parse(localStorage.getItem('estudofacil.profile')||'{}'))}catch(e){}
 function savePF(){try{localStorage.setItem('estudofacil.profile',JSON.stringify(PF))}catch(e){saveFail()}}
 const AVC=[['#F4A58E','#2A1710'],['#4169E1','#FFFFFF'],['#7FCBA1','#102A1B'],['#F7C2B1','#2A1710'],['#7C97F0','#101736'],['#E6DAC4','#3A2F25']];
@@ -228,66 +247,40 @@ ${calendar()}
 <div class="dc wf"><span class="mut">${ic('trophy',18)} Conquistas · ${nb} de ${BG.length}</span><div class="bdg">${BG.map(([n,d,i,u])=>`<div class="bd2${u?' on':''}"><em>${ic(i,22)}</em><b>${n}</b><small>${u?'Conquistada':d}</small></div>`).join('')}</div></div>
 <div class="dc w2"><span class="mut">${ic('target',18)} Preferências</span>
 <label class="gl mut">Meta diária (cartões)<input type="number" min="1" max="500" value="${M}" aria-label="Meta diária de cartões" onchange="M=Math.max(1,Math.min(500,+this.value||1));save()"></label>
-<label class="gl mut">Cartões novos por dia (0 = sem limite)<input type="number" min="0" max="500" value="${NEWMAX}" aria-label="Cartões novos por dia" onchange="NEWMAX=Math.max(0,Math.min(500,+this.value||0));Q=[];save()"></label>
 <div class="mut" style="font-size:13px;margin-top:6px">Pomodoro (minutos)</div><div class="pdr">${[['foco','Foco'],['curta','Pausa curta'],['longa','Pausa longa']].map(([k,l])=>`<label>${l}<input type="number" min="1" max="180" value="${Math.round(T[k])}" onchange="pDur('${k}',this.value)"></label>`).join('')}</div>
 <button class="btn gh" style="margin-top:8px" onclick="toggleTheme();vProfile()">${ic(curDark()?'sun':'moon',18)} Tema: ${curDark()?'escuro':'claro'} (trocar)</button></div>
 <div class="dc w2"><span class="mut">${ic('save',18)} Backup</span><div class="mut" style="font-size:13px">Seus dados ficam só neste navegador e não sincronizam entre aparelhos. Baixe uma cópia de vez em quando. O backup inclui cartões, estudos, histórico e perfil. <a class="lnk" href="privacidade.html">Política de privacidade</a></div><div class="row" style="margin-top:6px"><button class="btn gh" onclick="bkExport()">Baixar</button><button class="btn gh" onclick="$('#bkf').click()">Restaurar</button></div><input type="file" id="bkf" accept=".json,application/json" hidden onchange="bkImport(this)"></div>
 <div class="dc wf"><span class="mut">Zona de risco</span><div class="mut" style="font-size:13px">Apaga cartões, estudos, histórico e perfil deste aparelho. Você terá alguns segundos para desfazer.</div><button class="btn gh dng" style="margin-top:6px" onclick="wipeAsk(this)">Apagar todos os dados</button></div>
 </div>`}
 /* Flashcards */
-/* ===== Revisão: limite de cartões novos, treino livre, editar / pular / adiar ===== */
-const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const isNew=c=>!c.r; /* cartão que nunca foi avaliado */
-/* quantos cartões novos ainda cabem hoje (limite diário + os liberados com "Estudar mais novos") */
-function newRoom(){const t=today();if(NXd!==t){NXd=t;NX=0}return NEWMAX>0?Math.max(0,NEWMAX+NX-cards.filter(c=>c.nd===t).length):1e9}
-/* quantos cartões vencem hoje, já respeitando o limite de novos */
-function dueN(cat){const t=today(),a=cards.filter(c=>c.due<=t&&(!cat||c.cat===cat)),n=a.filter(isNew).length;return a.length-n+Math.min(n,newRoom())}
-function edStart(){if(!cur)return;EDC=true;vStudy()}
-function seSave(){const q=$('#se_q').value.trim(),a=$('#se_a').value.trim();if(!q||!a){toast('Preencha a pergunta e a resposta');return}cur.q=q;cur.a=a;cur.cat=$('#se_c').value.trim()||'Geral';EDC=false;save();vStudy()}
-function skip(){if(!cur)return;if(Q.length<2){toast('Esse é o último cartão de hoje');return}Q.push(Q.shift());cur=Q[0];shown=false;vStudy()}
-function snooze(){const c=cur;if(!c)return;const o={due:c.due,Q:Q.slice()};if(isNew(c))c.sn=1;c.due=today()+1;Q=Q.filter(x=>x!==c);pick();vStudy();save();
-toast('Cartão adiado para amanhã','Desfazer',()=>{c.due=o.due;Q=o.Q;cur=c;shown=false;save();if(tab==='study'&&!FR)vStudy()})}
-/* Treino livre: passa por todos os cartões sem mexer na agenda nem na meta */
-function freeStart(list){FR={q:shuf(list||pool()),i:0,ok:0,bad:[],sh:false};vStudy()}
-function rvF(){if(!FR||FR.sh)return;FR.sh=true;vFree(true)}
-function fr(ok){const F=FR,c=F&&F.q[F.i];if(!c)return;if(ok)F.ok++;else F.bad.push(c);F.i++;F.sh=false;vFree()}
-function vFree(anim){const F=FR,c=F.q[F.i],n=F.q.length;
-if(!c){const p=n?Math.round(F.ok/n*100):0;$('#view').innerHTML=`<div class="box q">${ic('check',32)} Treino concluído!<span class="mut">Isso não mudou sua agenda de revisão nem sua meta.</span><div class="sum"><div><b>${n}</b><span>cartões</span></div><div><b>${p}%</b><span>acertos</span></div></div></div>${F.bad.length?`<button class="btn" style="margin-bottom:10px" onclick="freeStart(FR.bad)">Treinar só os ${F.bad.length} que errei</button>`:''}<button class="btn gh" onclick="FR=null;pick();vStudy()">Voltar</button>`;return}
-const pct=Math.round(F.i/n*100);
-$('#view').innerHTML=`<div class="sh"><span class="mut">Treino livre · não altera a agenda</span><span class="mut">${F.i+1} de ${n}</span></div><div class="pg" role="progressbar" aria-label="Progresso do treino" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div><div class="flip${F.sh&&!anim?' fl':''}${!anim&&!F.sh?' cin':''}" role="button" tabindex="0" onclick="rvF()"><div class="fi"><div class="box q fr"><span class="mut">Pergunta · toque para virar</span>${esc(c.q)}</div><div class="box q bk"><span class="bq">${esc(c.q)}</span><span class="mut">Resposta</span>${esc(c.a)}</div></div></div>${F.sh?`<div class="rates two"><button class="btn no" onclick="fr(0)">Errei</button><button class="btn ok" onclick="fr(1)">Acertei</button></div><div class="mut kbhint">Atalhos: 1 Errei · 2 Acertei</div>`:`<button class="btn" onclick="rvF()">Mostrar resposta</button>`}<button class="btn gh" style="margin-top:10px" onclick="FR=null;pick();vStudy()">Sair do treino</button>`;
-if(anim)requestAnimationFrame(()=>requestAnimationFrame(()=>{const e=$('.flip');e&&e.classList.add('fl')}))}
 /* Fila do dia: embaralhada uma vez. "Errei" volta depois de ~3 cartões; "Difícil" em cartão novo vai para o fim */
-function pick(){EDC=false;const t=today();let k=newRoom();
-Q=Q.filter(c=>cards.includes(c)&&c.due<=t&&(!catF||c.cat===catF)&&(!isNew(c)||k-->0));
-if(!Q.length){const d=pool().filter(c=>c.due<=t);Q=[...shuf(d.filter(c=>!isNew(c))),...shuf(d.filter(isNew)).slice(0,newRoom())]} /* revisões antigas primeiro, depois os novos (até o limite diário) */
+function pick(){const t=today();Q=Q.filter(c=>cards.includes(c)&&c.due<=t&&(!catF||c.cat===catF));
+if(!Q.length){Q=pool().filter(c=>c.due<=t);for(let i=Q.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[Q[i],Q[j]]=[Q[j],Q[i]]}}
 cur=Q.length?Q[0]:null;shown=false}
 function rv(){if(shown)return;shown=true;vStudy(true)}
-function vStudy(anim){if(FR){vFree(anim);return}
+function vStudy(anim){
 if(!pool().length){$('#view').innerHTML=`<div class="box">Crie cartões para começar.<button class="btn" style="margin-top:12px" onclick="go('cards')">Criar cartões</button></div>`;return}
-const t=today(),left=dueN(catF);
-if(!cur){const nn=pool().filter(c=>c.due<=t&&isNew(c)).length,pend=nn-Math.min(nn,newRoom()),nx=nextInfo(),tom=pool().filter(c=>c.due===t+1).length,
+const t=today(),left=pool().filter(c=>c.due<=t).length;
+if(!cur){const nx=nextInfo(),tom=pool().filter(c=>c.due===t+1).length,
 st=ses.n?`<div class="sum"><div><b>${ses.n}</b><span>${ses.n===1?'revisão':'revisões'}</span></div><div><b>${Math.round(ses.hit/ses.n*100)}%</b><span>acertos</span></div><div><b>${tom||(nx&&nx.replace('em ',''))||'0'}</b><span>${tom||!nx?'para amanhã':'próxima revisão'}</span></div></div>`:'',
 sub=ses.n?'Bom trabalho!':(nx?`Próxima revisão ${nx}.`:'Volte amanhã ou adicione mais cartões.');
 ses.p=100;
-$('#view').innerHTML=`<div class="box q">${ic('check',32)} Tudo revisado por hoje!<span class="mut">${sub}</span>${pend>0?`<span class="mut">${pend} ${pend===1?'cartão novo espera':'cartões novos esperam'} pelo limite diário (${NEWMAX}).</span>`:''}${st}</div>${UNDO?`<button class="btn gh" style="margin-bottom:10px" onclick="undo()">↶ Desfazer última nota</button>`:''}${pend>0?`<button class="btn" style="margin-bottom:10px" onclick="NX+=NEWMAX;Q=[];pick();vStudy()">Estudar mais ${Math.min(pend,NEWMAX)} novos</button>`:''}<button class="btn gh" onclick="freeStart()">Treino livre (${pool().length} ${pool().length===1?'cartão':'cartões'})</button>`;return}
-if(EDC){$('#view').innerHTML=`<div class="box"><h2>Editar cartão</h2><input id="se_q" aria-label="Pergunta" value="${esc(cur.q)}"><textarea id="se_a" rows="3" aria-label="Resposta">${esc(cur.a)}</textarea><input id="se_c" aria-label="Matéria" value="${esc(cur.cat)}"><div class="row"><button class="btn" onclick="seSave()">Salvar</button><button class="btn gh" onclick="EDC=false;vStudy()">Cancelar</button></div></div>`;return}
+$('#view').innerHTML=`<div class="box q">${ic('check',32)} Tudo revisado por hoje!<span class="mut">${sub}</span>${st}</div>${UNDO?`<button class="btn gh" style="margin-bottom:10px" onclick="undo()">↶ Desfazer última nota</button>`:''}<button class="btn gh" onclick="cur=pool()[Math.floor(Math.random()*pool().length)];shown=false;vStudy()">Revisar mesmo assim</button>`;return}
 const tot=ses.g+left,pct=tot?Math.round(ses.g/tot*100):0,from=ses.p;ses.p=pct;
 $('#view').innerHTML=`<div class="sh"><span class="mut">Faltam ${left} para hoje</span>${UNDO?`<button class="ud" onclick="undo()" aria-label="Desfazer a última nota">↶ Desfazer</button>`:`<span class="mut">${ses.g} de ${tot}</span>`}</div><div class="pg" role="progressbar" aria-label="Progresso de hoje" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%;--from:${from}%"></i></div><div class="flip${shown&&!anim?' fl':''}${!anim&&!shown?' cin':''}" role="button" tabindex="0" onclick="rv()"><div class="fi"><div class="box q fr"><span class="mut">Pergunta · toque para virar</span>${esc(cur.q)}</div><div class="box q bk"><span class="bq">${esc(cur.q)}</span><span class="mut">Resposta</span>${esc(cur.a)}</div></div></div>
-${shown?`<div class="rates">${[['Errei','no'],['Difícil','gh'],['Bom',''],['Fácil','ok']].map(([l,c],r)=>{const s=sched(cur,r);return `<button class="btn ${c}" onclick="rate(${r})">${l}<small>${s.d?s.d+(s.d===1?' dia':' dias'):(r===0?'já já':'mais tarde')}</small></button>`}).join('')}</div><div class="mut kbhint">Atalhos: 1 Errei · 2 Difícil · 3 Bom · 4 Fácil · E editar · P pular${UNDO?' · Z desfazer':''}</div>`:`<button class="btn" onclick="rv()">Mostrar resposta</button>`}<div class="cact"><button onclick="edStart()">${ic('pen',16)} Editar</button><button onclick="skip()">${ic('repeat',16)} Pular</button><button onclick="snooze()">${ic('moon',16)} Amanhã</button></div>`;if(anim)requestAnimationFrame(()=>requestAnimationFrame(()=>{const e=$('.flip');e&&e.classList.add('fl')}))}
+${shown?`<div class="rates">${[['Errei','no'],['Difícil','gh'],['Bom',''],['Fácil','ok']].map(([l,c],r)=>{const s=sched(cur,r);return `<button class="btn ${c}" onclick="rate(${r})">${l}<small>${s.d?s.d+(s.d===1?' dia':' dias'):(r===0?'já já':'mais tarde')}</small></button>`}).join('')}</div><div class="mut kbhint">Atalhos: 1 Errei · 2 Difícil · 3 Bom · 4 Fácil${UNDO?' · Z desfazer':''}</div>`:`<button class="btn" onclick="rv()">Mostrar resposta</button>`}`;if(anim)requestAnimationFrame(()=>requestAnimationFrame(()=>{const e=$('.flip');e&&e.classList.add('fl')}))}
 /* Revisão espaçada: r = 0 Errei, 1 Difícil, 2 Bom, 3 Fácil */
 function sched(c,r){const b=c.box;if(r===0)return{box:0,d:0};
 if(r===1){if(b===0)return{box:0,d:0};const n=Math.max(1,b);return{box:n,d:Math.max(1,Math.ceil(DAYS[n]/2))}}
 const n=Math.min(DAYS.length-1,b+(r===3?2:1));return{box:n,d:DAYS[n]}}
 function rate(r){const c=cur;if(!c)return;const t=today(),bt=document.querySelectorAll('.rates .btn')[r];
-UNDO={c,box:c.box,due:c.due,r:c.r,nd:c.nd,sn:c.sn,add:false,Q:Q.slice(),ses:{...ses},k:dk()};
-const s=sched(c,r);c.box=s.box;c.due=t+s.d;if(!c.r){c.r=1;c.nd=t;delete c.sn}
-/* a meta conta cada cartão uma vez por dia (repetir um cartão errado não enche a meta) */
-bump(d=>{d.u=d.u||[];if(!d.u.includes(c.id)){d.u.push(c.id);d.rev++;UNDO.add=true}});
+UNDO={c,box:c.box,due:c.due,Q:Q.slice(),ses:{...ses},k:dk()};
+const s=sched(c,r);c.box=s.box;c.due=t+s.d;bump(d=>d.rev++);
 ses.n++;if(r>=2)ses.hit++;
 Q=Q.filter(x=>x!==c);if(c.due<=t)Q.splice(r===0?Math.min(3,Q.length):Q.length,0,c);else ses.g++;
 if(bt)gotas(bt,r);pick();vStudy()}
 /* Desfazer a última nota: devolve o cartão ao estado anterior e mostra o verso para avaliar de novo */
-function undo(){const u=UNDO;if(!u)return;UNDO=null;u.c.box=u.box;u.c.due=u.due;u.c.r=u.r;u.c.nd=u.nd;u.c.sn=u.sn;Q=u.Q;ses=u.ses;const d=L[u.k];if(d&&u.add){d.rev=Math.max(0,d.rev-1);if(d.u)d.u=d.u.filter(i=>i!==u.c.id)}save();cur=u.c;shown=true;vStudy()}
+function undo(){const u=UNDO;if(!u)return;UNDO=null;u.c.box=u.box;u.c.due=u.due;Q=u.Q;ses=u.ses;const d=L[u.k];if(d&&d.rev>0)d.rev--;save();cur=u.c;shown=true;vStudy()}
 /* Slime nas notas: gotinhas saem do botão tocado (ficam por cima da tela, sem atrasar a próxima carta) */
 function gotas(el,r){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const b=el.getBoundingClientRect(),s=document.createElement('span');
 s.className='sbf';s.style.cssText=`left:${b.left+b.width/2}px;top:${b.top+b.height/2}px;--c:${['var(--no)','var(--hi)','var(--ac)','var(--ok)'][r]}`;
@@ -352,7 +345,7 @@ $('#mc').innerHTML=`<div class="box"><input id="ce" aria-label="Conta" placehold
 function kp(k){const c=$('#ce');if(k==='C'){c.value='';$('#cr').textContent=''}else if(k==='⌫')c.value=c.value.slice(0,-1);else if(k==='=')calcGo();else c.value+=k}
 function calcGo(){const e=$('#ce').value.trim();if(!e)return;let r;try{r=fmtN(comp(e)(0))}catch(x){r='Erro'}$('#cr').textContent=r;if(r!=='Erro'){hist.unshift([e,r]);hist=hist.slice(0,6);$('#ce').value=r.replace(',','.');}}
 /* treino */
-/* ===== Treino: contas, equações (1º e 2º grau), leitura de gráficos e explicação passo a passo ===== */
+/*  Treino: contas, equações (1º e 2º grau), leitura de gráficos e explicação passo a passo*/
 const m_=v=>String(v).replace('-','−'),p_=v=>v<0?'('+m_(v)+')':m_(v);
 /* monta um termo de polinômio: trm(3,'x²',1) -> 3x² ; trm(-1,'x') -> " − x" */
 const trm=(v,s,f)=>{if(!v)return '';const ab=Math.abs(v),co=(ab===1&&s)?'':ab;return f?(v<0?'−':'')+co+s:(v<0?' − ':' + ')+co+s};
@@ -419,19 +412,15 @@ try{const t=localStorage.getItem('estudofacil.theme');document.documentElement.d
 function toast(m,b,f){const t=$('#toast');t.innerHTML=esc(m)+(b?`<button id="tu">${b}</button>`:'');t.classList.add('on');if(b)$('#tu').onclick=()=>{f();t.classList.remove('on')};clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),6000)}
 function vPrev(){$('#view').innerHTML=`<div class="box"><h2>Revisar ${PV.l.length} cartões</h2><div class="mut" style="margin-bottom:8px">Matéria: ${esc(PV.cat)}. Desmarque ou edite antes de salvar.</div>${PV.l.map((x,i)=>`<div class="item" style="display:block"><label style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><input type="checkbox" style="width:auto;margin:0" ${x.on?'checked':''} onchange="PV.l[${i}].on=this.checked"><span class="mut">Cartão ${i+1}</span></label><input value="${esc(x.q)}" oninput="PV.l[${i}].q=this.value"><textarea rows="2" oninput="PV.l[${i}].a=this.value">${esc(x.a)}</textarea></div>`).join('')}</div><div class="row"><button class="btn" onclick="pvSave()">Salvar selecionados</button><button class="btn gh" onclick="PV=null;render()">Descartar</button></div>`}
 function pvSave(){let n=0,d=0;PV.l.forEach((x,i)=>{const q=x.q.trim(),a=x.a.trim();if(!x.on||!q||!a)return;if(cards.some(c=>c.cat===PV.cat&&c.q.trim().toLowerCase()===q.toLowerCase())){d++;return}cards.push(mk(q,a,PV.cat,i));n++});lastCat=PV.cat;PV=null;save();render();toast(n+' cartões salvos'+(d?' · '+d+' repetidos ignorados':''))}
-function bkExport(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({v:1,cards,M,L,T,TOP,PF,N:NEWMAX})],{type:'application/json'}));a.download='estudo-facil-backup-'+dk()+'.json';a.click();toast('Backup gerado')}
-function bkImport(inp){const f=inp.files[0];inp.value='';if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!Array.isArray(o.cards))throw 0;const pv={cards,T:{...T},M,L};cards=o.cards.filter(c=>c&&c.q&&c.a).map((c,i)=>({id:c.id||Date.now()+i,q:String(c.q),a:String(c.a),cat:String(c.cat||'Geral'),box:+c.box||0,due:+c.due||0,r:(c.r||((+c.due>0||+c.box>0)&&!c.sn))?1:0,nd:+c.nd||0,sn:c.sn?1:0}));if(Array.isArray(o.TOP)){TOP=o.TOP;saveT()}if(o.PF&&typeof o.PF==='object'){PF={name:String(o.PF.name||'').slice(0,30),av:+o.PF.av||0};savePF()}M=o.M||M;L=o.L||{};if(typeof o.N==='number')NEWMAX=Math.max(0,o.N);if(o.T)for(const k of ['foco','curta','longa'])if(+o.T[k]>0)T[k]=+o.T[k];if(!P.running){P.rem=null;P.left=dur(P.mode)}save();render();toast(cards.length+' cartões restaurados','Desfazer',()=>{cards=pv.cards;M=pv.M;L=pv.L;save();render()})}catch(e){toast('Arquivo de backup inválido')}};r.readAsText(f)}
+function bkExport(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({v:1,cards,M,L,T,TOP,PF})],{type:'application/json'}));a.download='estudo-facil-backup-'+dk()+'.json';a.click();toast('Backup gerado')}
+function bkImport(inp){const f=inp.files[0];inp.value='';if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!Array.isArray(o.cards))throw 0;const pv={cards,T:{...T},M,L};cards=o.cards.filter(c=>c&&c.q&&c.a).map((c,i)=>({id:c.id||Date.now()+i,q:String(c.q),a:String(c.a),cat:String(c.cat||'Geral'),box:+c.box||0,due:+c.due||0}));if(Array.isArray(o.TOP)){TOP=o.TOP;saveT()}if(o.PF&&typeof o.PF==='object'){PF={name:String(o.PF.name||'').slice(0,30),av:+o.PF.av||0};savePF()}M=o.M||M;L=o.L||{};if(o.T)for(const k of ['foco','curta','longa'])if(+o.T[k]>0)T[k]=+o.T[k];if(!P.running){P.rem=null;P.left=dur(P.mode)}save();render();toast(cards.length+' cartões restaurados','Desfazer',()=>{cards=pv.cards;M=pv.M;L=pv.L;save();render()})}catch(e){toast('Arquivo de backup inválido')}};r.readAsText(f)}
 try{if(/^https?:/.test(location.protocol)&&navigator.serviceWorker)navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')drawer(0);const typing=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName);
-if(tab==='study'&&FR&&!typing){if(!FR.q[FR.i])return;if((e.key===' '||e.key==='Enter')&&!FR.sh){e.preventDefault();rvF()}else if(FR.sh&&(e.key==='1'||e.key==='2'))fr(+e.key-1);return}
-if(tab==='study'&&UNDO&&(e.key==='z'||e.key==='Z')&&!e.ctrlKey&&!e.metaKey&&!typing){undo();return}
-if(tab!=='study'||!cur||typing||EDC)return;
-if((e.key===' '||e.key==='Enter')&&!shown){e.preventDefault();rv()}else if(shown&&'1234'.includes(e.key)&&e.key.length===1)rate(+e.key-1);else if(e.key==='e'||e.key==='E')edStart();else if(e.key==='p'||e.key==='P')skip()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')drawer(0);if(tab==='study'&&UNDO&&(e.key==='z'||e.key==='Z')&&!e.ctrlKey&&!e.metaKey&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)){undo();return}if(tab!=='study'||!cur||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if((e.key===' '||e.key==='Enter')&&!shown){e.preventDefault();rv()}else if(shown&&'1234'.includes(e.key)&&e.key.length===1)rate(+e.key-1)});
 load();render();foot();
 /* Slime ao passar o mouse por cima dos cards (só mouse; no toque vale o clique) */
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse')return;const c=e.target.closest&&e.target.closest('.sc');if(!c||(e.relatedTarget&&c.contains(e.relatedTarget))||c._hv>Date.now())return;c._hv=Date.now()+700;splat(c)});
 
-/* ===== Cards de massa (slime): física de mola. A massa segue o ponteiro, estica com a velocidade, amassa ao apertar e balança ao soltar ===== */
+/*  Cards de massa (slime): física de mola. A massa segue o ponteiro, estica com a velocidade, amassa ao apertar e balança ao soltar */
 (function(){
 if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 /* [forma de repouso, forma de hover] de cada tipo de card: 8 raios de borda em % */
