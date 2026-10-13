@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#1E1F24">
+<meta name="description" content="Moldi: flashcards com revisão espaçada, quiz, matemática e Pomodoro para estudar com constância.">
+<meta name="color-scheme" content="dark light">
+<!-- og:image aponta para o endereço do GitHub Pages; se mudar o endereço do site, troque aqui -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Moldi">
+<meta property="og:title" content="Moldi: estude com constância">
+<meta property="og:description" content="Flashcards com revisão espaçada, quiz, matemática e Pomodoro. Grátis, sem cadastro e funciona offline.">
+<meta property="og:image" content="https://xhristophe-dev.github.io/PRJT-PE/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link id="fav" rel="icon" href="img/icon-192.png?v=4">
+<link rel="shortcut icon" href="img/icon-192.png?v=4">
+<link rel="apple-touch-icon" href="img/icon-192.png?v=4">
+<script>
+/* Ícone da aba: usa img/icon-192.png; se não existir, tenta os outros candidatos */
+(function(){var l=document.getElementById('fav'),c=['img/icon-192.png','icon-192.png','img/favicon.png','img/logo.png','img/logo.webp'],i=0;
+function t(){if(i>=c.length)return;var u=c[i++]+'?v=4',m=new Image();m.onload=function(){l.href=u;var a=document.querySelector('link[rel="apple-touch-icon"]');if(a&&!/webp/.test(u))a.href=u};m.onerror=t;m.src=u}t()})();
+</script>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moldi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+<!-- filtro que faz as gotas "grudarem" na massa dos cards (efeito slime) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="goo" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="g"/><feComposite in="SourceGraphic" in2="g" operator="atop"/></filter></defs></svg>
+<div id="ov" onclick="drawer(0)"></div>
+<nav id="dr" aria-label="Menu"></nav>
+<nav id="tn" aria-label="Menu superior"></nav>
+<main>
+<header><button class="hb mn" onclick="drawer(1)" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><h1 id="ttl"></h1><button class="hb" id="tb" data-tb style="margin-left:auto" onclick="toggleTheme()" aria-label="Alternar tema"></button></header>
+<div id="th"></div>
+<div id="filt"></div>
+<div id="view"></div>
+<footer id="ft"></footer>
+</main>
+<button id="fab" class="fab" onclick="go('study')" aria-label="Estudar agora" hidden></button>
+<div id="toast" role="status"></div>
+<noscript><p style="padding:24px;font-family:sans-serif">O Moldi precisa do JavaScript ativado para funcionar.</p></noscript>
+<script src="app.js?v=11"></script>
+</body>
+</html>

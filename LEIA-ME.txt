@@ -1,0 +1,30 @@
+MOLDI - como usar
+
+1. Publique a pasta inteira (index.html, style.css, app.js, manifest.webmanifest, sw.js, ícones e imagens)
+   num site com https. Abrir o index.html direto no computador também funciona, só sem instalação/offline.
+
+2. IMAGENS: crie a pasta "img" ao lado do index.html e coloque nela todas as .webp
+   (logo, hero-lua, estudando, estudar, quiz, aprender, pomodoro, exercicio, dormindo).
+   logo.webp = a logo do Moldi (já com o nome; o site não escreve "Moldi" ao lado).
+   O nome da pasta fica em IMGDIR no app.js. Se o arquivo não estiver em img/, o site tenta a raiz.
+   Para trocar uma ilustração, substitua o arquivo mantendo o nome (WebP, de preferência com fundo transparente):
+   hero-lua.webp   -> topo da Home
+   estudando.webp  -> ao lado de "Continue estudando"
+   estudar.webp, quiz.webp, aprender.webp, pomodoro.webp -> cabeçalho de cada aba
+   Tamanho bom: ~900 px de largura para hero-lua e ~440 px para as demais.
+
+3. App instalável (PWA): manifest.webmanifest, sw.js, icon-192.png e icon-512.png precisam ficar na mesma pasta.
+   Ao atualizar qualquer arquivo, mude o valor de V em sw.js (ex.: moldi-v10) para o celular baixar a versão nova.
+
+Tema escuro: cinza escuro com azul royal. Tema claro: branco bege. O botão sol/lua alterna o tema.
+
+4. Ilustrações dos cards da Home (Feitos hoje e Meus cartões): coloque na pasta img/
+   exercicio.webp (card camarão) e dormindo.webp (card azul). Também vale .png com o mesmo nome.
+   Imagem quadrada, fundo transparente, ~440 px.
+
+5. Antes de publicar: preencha o e-mail em privacidade.html
+   e publique todos os arquivos juntos num site com https.
+
+6. Cards de massa (slime): os cards das faixas da Home têm cores (camarão, azul, verde, lilás), mudam de forma ao passar
+   o mouse e quicam ao toque. No celular não existe "hover": o efeito acontece ao tocar.
+   As chaves internas do navegador continuam "estudofacil.*" de propósito, para ninguém perder os dados já salvos.

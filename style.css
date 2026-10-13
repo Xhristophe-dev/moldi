@@ -1,0 +1,410 @@
+/* =====================================================================
+   Estudo Fácil — estilos
+   1. Tema   2. Base   3. Componentes   4. Estrutura (menus, botão flutuante)
+   5. Telas  6. Animações   7. Responsivo   8. Acessibilidade
+   ===================================================================== */
+
+/* 1. TEMA ----------------------------------------------------------- */
+/* Claro: branco bege + laranja camarão pastel */
+:root{--sp:cubic-bezier(.34,1.56,.64,1);--bg:#F8F3EB;--card:#FFFDF9;--tx:#2D2723;--mut:#6B5F55;--ac:#F4A58E;--act:#3A2119;--bd:#E8DECF;--soft:#F1E9DC;--soft2:#E2D6C4;--ok:#8CCBA8;--no:#EE9AA0;--sh:0 6px 20px #4a35201f;--hi:#6F8CE0;--bt:#E6DAC4;--btx:#3A2F25;--pk:#F7C2B1;--pkx:#3A2119;--onp:#2A1710;--heat:#E27D5F;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Escuro: cinza escuro + azul royal (automático pelo sistema e quando escolhido no botão) */
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1E1F24;--card:#282A31;--tx:#F3F1EE;--mut:#B9BBC6;--ac:#4169E1;--act:#FFFFFF;--bd:#383B4A;--soft:#2E3248;--soft2:#40456A;--ok:#7FCBA1;--no:#EE8F9B;--sh:0 8px 24px #0009;--hi:#7C97F0;--bt:#4169E1;--btx:#FFFFFF;--pk:#F4B6A3;--pkx:#2A1710;--onp:#2A1710;--heat:#F4B6A3;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1E1F24;--card:#282A31;--tx:#F3F1EE;--mut:#B9BBC6;--ac:#4169E1;--act:#FFFFFF;--bd:#383B4A;--soft:#2E3248;--soft2:#40456A;--ok:#7FCBA1;--no:#EE8F9B;--sh:0 8px 24px #0009;--hi:#7C97F0;--bt:#4169E1;--btx:#FFFFFF;--pk:#F4B6A3;--pkx:#2A1710;--onp:#2A1710;--heat:#F4B6A3;color-scheme:dark}
+
+/* 2. BASE ----------------------------------------------------------- */
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:12px 16px 48px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+header h1{font-size:24px;font-weight:800;letter-spacing:-.01em;margin:0}
+h2{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0 0 12px}
+a{color:var(--tx);font-weight:700;text-underline-offset:2px}
+.mut{color:var(--mut);font-size:14px}
+.row{display:flex;gap:8px}
+.ph{aspect-ratio:1;visibility:hidden}   /* espaço reservado quando a imagem não existe */
+
+/* 3. COMPONENTES ---------------------------------------------------- */
+/* Botões */
+.btn{display:flex;gap:8px;align-items:center;justify-content:center;width:100%;padding:14px 18px;border:1px solid transparent;border-radius:12px;background:var(--ac);color:var(--act);font:inherit;font-weight:700;letter-spacing:-.01em;cursor:pointer;transition:transform .15s,filter .2s,box-shadow .2s,background-color .3s}
+.btn.gh{background:var(--soft);color:var(--tx);border-color:var(--bd)}
+.btn.ok{background:var(--ok);color:var(--onp)}
+.btn.no{background:var(--no);color:var(--onp)}
+.btn.sm{width:auto;padding:8px 20px;font-size:14px}
+.btn:active{transform:scale(.97)}
+.lnk{border:0;background:none;color:var(--tx);font:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px;padding:0;cursor:pointer}
+.lnk:hover{color:var(--hi)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px}
+.chip{border:1px solid var(--bd);background:var(--soft);color:var(--tx);font:inherit;font-size:13px;font-weight:600;padding:7px 12px;border-radius:99px;cursor:pointer}
+.chip:hover{border-color:var(--hi)}
+.x{border:0;background:none;color:var(--no);padding:10px}
+
+/* Cartões, formulários e listas */
+.box{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;margin-bottom:14px}
+input,textarea,select{width:100%;padding:12px 14px;border:1px solid var(--bd);border-radius:12px;background:var(--soft);color:var(--tx);font:inherit;margin-bottom:8px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--hi)}
+#filt select{background:var(--card);margin-bottom:14px}
+.item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid var(--bd)}
+.item:last-child{border:0}
+.q,.item div{white-space:pre-wrap}
+details{border-bottom:1px solid var(--bd);padding:10px 0}
+details:last-child{border:0}
+summary{font-weight:800;cursor:pointer}
+details p{margin:6px 0 0}
+.bar{height:14px;background:var(--soft2);border-radius:99px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--pk);border-radius:99px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.stat{display:flex;gap:8px}
+.stat>div{flex:1;background:var(--soft);border-radius:16px;padding:12px;text-align:center}
+.stat b{font-size:22px;display:block}
+
+/* Abas internas (Matemática) e seletor de modo (Pomodoro) */
+.sub{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;scrollbar-width:none}
+.sub::-webkit-scrollbar{display:none}
+.sub button{flex:0 0 auto;padding:9px 16px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font:inherit;font-size:14px;font-weight:700}
+.sub button.on{background:var(--ac);color:var(--act)}
+.modes{display:flex;gap:6px;margin-bottom:18px;background:var(--soft);padding:5px;border-radius:14px}
+.modes button{flex:1;padding:9px 4px;border:0;border-radius:10px;background:none;color:var(--mut);font:inherit;font-size:13px;font-weight:700;transition:background-color .25s,color .25s}
+.modes button.on{background:var(--ac);color:var(--act)}
+.modes small{display:block;font-weight:800}
+
+/* 4. ESTRUTURA ------------------------------------------------------ */
+/* Botão redondo do cabeçalho (menu / tema) */
+.hb{display:flex;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border:1px solid var(--bd);border-radius:50%;background:var(--card);color:var(--tx)}
+/* Menu lateral */
+#ov{position:fixed;inset:0;background:#0008;opacity:0;pointer-events:none;transition:.25s;z-index:9}
+#dr{position:fixed;top:0;bottom:0;left:0;width:270px;background:var(--card);border-radius:0 18px 18px 0;box-shadow:var(--sh);transform:translateX(-105%);visibility:hidden;transition:.25s;z-index:10;padding:calc(16px + env(safe-area-inset-top,0px)) 12px 16px}
+#dr .t{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.01em;margin:6px 10px 18px}
+#dr button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px;margin-bottom:4px;border:0;border-radius:14px;background:none;color:var(--tx);font:inherit;font-weight:600;transition:background-color .25s,color .25s}
+#dr button.on{background:var(--ac);color:var(--act)}
+body.open #ov{opacity:1;pointer-events:auto}
+body.open #dr{transform:none;visibility:visible}
+/* Menu superior (só no computador) */
+#tn{display:none;position:fixed;top:0;left:0;right:0;z-index:8;align-items:center;gap:4px;padding:10px 24px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:var(--bg);border-bottom:1px solid var(--bd)}
+#tn .lg{margin-right:auto;display:flex;align-items:center;gap:8px;font-weight:800;font-size:21px;letter-spacing:-.02em}
+#tn button.l{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--mut);font:inherit;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer;transition:background-color .25s,color .25s}
+#tn button.l:hover{color:var(--tx);background:var(--soft)}
+#tn button.l.on{background:var(--ac);color:var(--act)}
+#tn button.ib{padding:10px;margin-left:2px}
+/* Aviso temporário */
+#toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--tx);color:var(--bg);padding:12px 16px;border-radius:14px;display:flex;gap:14px;align-items:center;opacity:0;pointer-events:none;transition:.25s;z-index:20;box-shadow:var(--sh);max-width:90%}
+#toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast button{border:0;background:var(--ac);color:var(--act);padding:6px 12px;border-radius:10px;font:inherit;font-weight:800}
+/* Botão flutuante "Estudar" (só no celular) */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:7;display:flex;align-items:center;gap:8px;border:0;border-radius:99px;padding:14px 20px;background:var(--ac);color:var(--act);font:inherit;font-weight:800;box-shadow:var(--sh);cursor:pointer}
+.fab[hidden]{display:none}
+/* Ilustração no topo das abas */
+.th{display:flex;align-items:center;gap:16px;margin:0 0 20px}
+.th>div{flex:1}
+.th b{display:block;font-size:20px;letter-spacing:-.01em}
+.th span{color:var(--mut)}
+.th img{width:150px;flex:none;display:block}
+.th .ph{display:none}
+
+/* 5. TELAS ---------------------------------------------------------- */
+/* Home: topo (o espaço da direita é da imagem hero-lua.png) */
+main.wide #ttl{display:none}
+.hero{display:flex;align-items:center;gap:24px;margin:8px 0 32px}
+.hero>div{flex:1}
+.hero>img,.hero>.ph{width:min(460px,46%);flex:none;display:block}
+.hero h2{font-size:clamp(30px,4.6vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:12px 0}
+.hero p{color:var(--mut);margin:0 0 20px;font-size:17px}
+.hero .btn{width:auto;display:inline-flex;padding:14px 28px}
+.hello{display:inline-block;background:var(--soft);border:1px solid var(--bd);padding:6px 14px;border-radius:99px;font-weight:600;font-size:14px;color:var(--mut)}
+
+/* Home: painel */
+.dash{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:6px 0 30px}
+.dc{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
+.dc.w2{grid-column:span 2}
+.dc.wf{grid-column:1/-1}
+.dc>span{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.dc>b{font-size:36px;line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.dc>b small{font-size:16px;font-weight:600;color:var(--mut)}
+.dc>small{font-size:13px;font-weight:600}
+.dc.t1{background:var(--pk);color:var(--pkx);border-color:transparent}
+.dc.t2{background:var(--bt);color:var(--btx);border-color:transparent}
+.dc.t1>b small,.dc.t2>b small{color:inherit;opacity:.8}
+.gl{display:flex;align-items:center;gap:10px;margin-top:4px}
+.gl input{width:84px;margin:0}
+
+/* Home: calendário de estudo */
+.cd{display:block;aspect-ratio:1;border-radius:4px;background:var(--soft)}
+.cd.l1{background:color-mix(in srgb,var(--heat) 30%,var(--soft))}
+.cd.l2{background:color-mix(in srgb,var(--heat) 55%,var(--soft))}
+.cd.l3{background:color-mix(in srgb,var(--heat) 80%,var(--soft))}
+.cd.l4{background:var(--heat)}
+.cal-f{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.cal-lg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--mut)}
+.cal-lg .cd{width:12px}
+
+/* Home: faixas de cards */
+.sw{margin-bottom:10px}
+.sw h2{font-size:20px;margin:0 0 6px}
+.sr{display:flex;align-items:center;gap:20px}
+.sx{flex:1;min-width:0}
+.side{flex:none;width:210px}
+.side img,.side .ph{width:100%;display:block}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px;padding:6px 0 10px}
+.sc{min-height:140px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:16px;padding:18px;text-align:left;font:inherit;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.sc b{font-size:17px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.sc span{font-size:13px;font-weight:500;color:var(--mut)}
+.sc:hover,.sc:focus-visible{transform:scale(1.05);box-shadow:var(--sh);border-color:var(--hi)}
+.ci{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--hi);margin-bottom:auto}
+.sc:nth-child(even) .ci{background:var(--pk);color:var(--pkx)}
+
+/* Estudar: flashcard e avaliação */
+.flip{perspective:900px;cursor:pointer}
+.fi{display:grid;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.3,.8,.3,1)}
+.fr,.bk{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bk{transform:rotateY(180deg)}
+.fl .fi{transform:rotateY(180deg)}
+.rates{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.rates .btn{flex-direction:column;gap:2px;padding:12px 4px}
+.rates small{font-weight:600;font-size:12px;opacity:.8}
+.kbhint{display:none;text-align:center;font-size:12px;margin-top:10px}
+
+/* Cartão de pergunta (Estudar / Quiz) e alternativas */
+.q{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:180px;padding:16px;text-align:center;font-size:22px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;padding:14px;margin-bottom:8px;border:2px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);font:inherit;font-weight:600}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 25%,var(--card))}
+.opt.wrong{border-color:var(--no);background:color-mix(in srgb,var(--no) 25%,var(--card))}
+.opt.right::after{content:" ✓"}
+.opt.wrong::after{content:" ✗"}
+
+/* Pomodoro */
+.dial{position:relative;width:min(300px,80vw);aspect-ratio:1;margin:12px auto 26px}
+.dial svg{position:relative;width:100%;height:100%;display:block;overflow:visible}
+.dial #ring{stroke:var(--c);transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)}
+.dial.run #ring{transition:none;filter:drop-shadow(0 0 5px var(--c))}
+.dial #knob{fill:var(--c);stroke:var(--card);stroke-width:3;transition:opacity .3s}
+.halo{position:absolute;inset:-4%;border-radius:50%;background:var(--c);opacity:0;filter:blur(22px);pointer-events:none}
+#tmw{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#tm{font-size:clamp(44px,15vw,60px);font-weight:800;font-variant-numeric:tabular-nums;cursor:pointer}
+.cl{display:inline-block}
+.te{display:flex;align-items:center;gap:6px}
+.te label{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--mut)}
+.te input{width:72px;font-size:28px;text-align:center;margin:0;padding:8px 4px}
+.te b{font-size:28px;padding-bottom:16px}
+
+/* Matemática */
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kp button{padding:14px 0;border:2px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);font:inherit;font-size:18px}
+.kp .f{background:var(--soft);font-size:15px}
+.kp .eq{background:var(--ac);border-color:var(--ac);color:var(--act)}
+.big{font-size:32px;font-weight:800;text-align:right;min-height:44px;word-break:break-all}
+
+/* 6. ANIMAÇÕES ------------------------------------------------------ */
+@keyframes dialIn{from{opacity:0;transform:scale(.92)}}
+@keyframes halo{0%,100%{opacity:.08;transform:scale(.97)}50%{opacity:.26;transform:scale(1.03)}}
+@keyframes flash{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}
+@keyframes donePop{0%{transform:scale(1)}35%{transform:scale(1.06)}70%{transform:scale(.99)}100%{transform:scale(1)}}
+@keyframes colon{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes enter{from{opacity:0;transform:translateY(12px)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.98)}}
+@keyframes cardIn{from{opacity:0;transform:translateX(24px) scale(.97)}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-14px)}}
+@keyframes fabIn{from{opacity:0;transform:translateY(20px) scale(.9)}}
+/* Entrada ao rolar (a classe .in é colocada pelo JavaScript) */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+.rv.in .dc,.rv.in .sc{animation:rise .55s cubic-bezier(.2,.8,.2,1) backwards}
+.rv.in .dc:nth-child(2),.rv.in .sc:nth-child(2){animation-delay:.07s}
+.rv.in .dc:nth-child(3),.rv.in .sc:nth-child(3){animation-delay:.14s}
+.rv.in .dc:nth-child(4),.rv.in .sc:nth-child(4){animation-delay:.21s}
+.rv.in .dc:nth-child(5),.rv.in .sc:nth-child(5){animation-delay:.28s}
+.rv.in .dc:nth-child(6),.rv.in .sc:nth-child(6){animation-delay:.35s}
+.rv.in .dc:nth-child(7),.rv.in .sc:nth-child(7){animation-delay:.42s}
+.rv.in .dc:nth-child(8),.rv.in .sc:nth-child(8){animation-delay:.49s}
+/* Troca de aba, flashcard novo, botão flutuante */
+.enter{animation:enter .4s cubic-bezier(.2,.8,.2,1)}
+.cin{animation:cardIn .4s cubic-bezier(.2,.8,.2,1)}
+.fab{animation:fabIn .45s cubic-bezier(.2,.8,.2,1)}
+/* Ilustrações flutuando */
+.hero>img{animation:float 7s ease-in-out infinite}
+.side img,.th img{animation:float 6s ease-in-out infinite}
+/* Quiz */
+.opt.right{animation:pop .45s}
+.opt.wrong{animation:shake .45s}
+/* Pomodoro */
+.dial{animation:dialIn .55s cubic-bezier(.2,.8,.2,1)}
+.dial.run .halo{animation:halo 3.2s ease-in-out infinite}
+.dial.run .cl{animation:colon 1s ease-in-out infinite}
+.dial.done{animation:donePop .9s cubic-bezier(.2,.8,.2,1)}
+.dial.done .halo{animation:flash 1.3s ease-out}
+/* Menu lateral: itens entram em cascata */
+body.open #dr button{animation:slideIn .35s cubic-bezier(.2,.8,.2,1) backwards}
+body.open #dr button:nth-child(3){animation-delay:.03s}
+body.open #dr button:nth-child(4){animation-delay:.06s}
+body.open #dr button:nth-child(5){animation-delay:.09s}
+body.open #dr button:nth-child(6){animation-delay:.12s}
+body.open #dr button:nth-child(7){animation-delay:.15s}
+body.open #dr button:nth-child(8){animation-delay:.18s}
+body.open #dr button:nth-child(9){animation-delay:.21s}
+/* Troca de tema: cores mudam suavemente (classe .tt colocada pelo JavaScript) */
+html.tt *,html.tt *::before,html.tt *::after{transition:background-color .35s ease,color .35s ease,border-color .35s ease!important}
+
+/* 7. RESPONSIVO ----------------------------------------------------- */
+@media(hover:hover){.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.btn:active{transform:scale(.97)}}
+/* Celular e tablet */
+@media(max-width:899px){
+main{padding-bottom:104px}
+}
+/* Celular */
+@media(max-width:700px){
+.hero{flex-direction:column-reverse;align-items:flex-start;gap:12px}
+.hero>img{width:78%;align-self:center}
+.hero>.ph{display:none}
+.sr{flex-direction:column;align-items:stretch;gap:0}
+.side{order:-1;width:130px}
+.side .ph{display:none}
+}
+/* Computador */
+@media(min-width:900px){
+#tn{display:flex}
+.hb.mn,header #tb{display:none}
+main.wide header{display:none}
+main{max-width:760px;padding-top:108px}
+main.wide{max-width:1180px}
+.dash{grid-template-columns:repeat(4,1fr)}
+.fab{display:none}
+#toast{bottom:20px}
+.th img{width:210px}
+.th b{font-size:24px}
+}
+@media(hover:hover) and (min-width:900px){.kbhint{display:block}}
+
+/* 8. ACESSIBILIDADE ------------------------------------------------- */
+button:focus-visible,[role=button]:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+/* Com "reduzir movimento" no sistema, só param os movimentos que ficam em loop */
+@media(prefers-reduced-motion:reduce){.hero>img,.side img,.th img,.dial.run .halo,.dial.run .cl,.cong,.cf{animation:none}.cfw{display:none}.wc i{transition:none}}
+/* 9. META BATIDA ---------------------------------------------------- */
+.dc.goal{background:color-mix(in srgb,var(--ok) 20%,var(--card));border-color:var(--ok);overflow:hidden}
+.dc.goal .bar i{background:var(--ok)}
+.cong{display:flex;align-items:center;gap:12px;margin:2px 0 6px;padding:12px 14px;border-radius:16px;background:var(--ok);color:var(--onp);animation:cpop .5s cubic-bezier(.3,1.5,.5,1)}
+.cong svg{flex:none}
+.cong strong{display:block;font-size:16px;line-height:1.2}
+.cong span{font-size:13px;font-weight:600}
+.cfw{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cf{position:absolute;top:-14px;left:var(--x);width:8px;height:12px;border-radius:2px;background:var(--c);animation:cfall 1.8s var(--d) ease-in forwards}
+@keyframes cpop{0%{transform:scale(.85);opacity:0}100%{transform:none;opacity:1}}
+@keyframes cfall{to{transform:translateY(280px) rotate(540deg);opacity:0}}
+
+/* 10. PERFIL -------------------------------------------------------- */
+.pf{flex-direction:row;align-items:center;gap:18px}
+.av{width:84px;height:84px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800}
+.pi{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}.pi input{margin:0;font-weight:700}
+.sw2{display:flex;gap:8px}.sw2 button{width:28px;height:28px;border-radius:50%;border:2px solid transparent;padding:0;cursor:pointer}
+.sw2 button.on{border-color:var(--tx);box-shadow:0 0 0 2px var(--card) inset}
+.pst{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pst>div{background:var(--soft);border-radius:14px;padding:12px}.pst b{display:block;font-size:26px;line-height:1.15}.pst span{font-size:12.5px;color:var(--mut)}
+.wk{display:flex;gap:8px;height:150px;margin:6px 0}
+.wb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.wb small{font-size:12px;font-weight:700;height:16px}
+.wc{flex:1;min-height:0;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.wc i{display:block;width:100%;max-width:46px;border-radius:10px 10px 4px 4px;background:var(--ac);transition:height .6s cubic-bezier(.2,.8,.2,1)}
+.wc i.ok{background:var(--ok)}
+.wb span{font-size:12px;color:var(--mut);font-weight:600}.wb span.td{color:var(--tx);font-weight:800}
+.bdg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:4px}
+.bd2{background:var(--soft);color:var(--mut);border-radius:16px;padding:12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bd2 em{opacity:.55}.bd2 b{font-size:14px}.bd2 small{font-size:12px}
+.bd2.on{background:var(--pk);color:var(--pkx)}.bd2.on em{opacity:1}
+.pdr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pdr label{font-size:12px;color:var(--mut);font-weight:600}.pdr input{margin:4px 0 0}
+.dng{color:var(--no)}
+@media(min-width:700px){.pst{grid-template-columns:repeat(4,1fr)}}
+
+/* 11. CALENDÁRIO MENSAL E ILUSTRAÇÃO DOS CARDS --------------------- */
+.cmh{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:460px;margin-top:4px}
+.cmh b{font-size:17px}
+.cmh button{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:var(--soft);color:var(--tx);font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cmh button:disabled{opacity:.35;cursor:default}
+.cmw,.cmg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:460px}
+.cmw{margin-top:8px}.cmw span{text-align:center;font-size:12px;font-weight:700;color:var(--mut)}
+.cm{aspect-ratio:1;border-radius:12px;background:var(--soft);color:var(--tx);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.cm.e{background:none}.cm.fu{opacity:.35}
+.cm.l1{background:color-mix(in srgb,var(--heat) 30%,var(--soft))}
+.cm.l2{background:color-mix(in srgb,var(--heat) 55%,var(--soft))}
+.cm.l3{background:color-mix(in srgb,var(--heat) 80%,var(--soft))}
+.cm.l4{background:var(--heat)}
+.cm.l2,.cm.l3,.cm.l4{color:#1A0F0A}
+.cm.td{outline:2px solid var(--hi);outline-offset:1px}
+.dc.t1,.dc.t2{overflow:hidden;min-height:170px}
+.dc.t1>*:not(.cimg),.dc.t2>*:not(.cimg){max-width:58%}
+.cimg{position:absolute;right:4px;bottom:0;width:46%;max-width:170px;height:auto;pointer-events:none;user-select:none}
+
+/* 12. CARDS DE MASSA (SLIME) E ESPAÇO DAS ILUSTRAÇÕES ----------------- */
+.sc{--c:#F4B6A3;--ct:#2A1710;--r:62% 38% 54% 46%/48% 56% 44% 52%;position:relative;isolation:isolate;min-height:150px;padding:28px 24px;background:none;border:0;border-radius:0;color:var(--ct);transition:transform .5s var(--sp);-webkit-tap-highlight-color:transparent}
+.sc:nth-child(4n+2){--c:#4169E1;--ct:#FFFFFF;--r:46% 54% 38% 62%/58% 42% 58% 42%}
+.sc:nth-child(4n+3){--c:#7FCBA1;--ct:#102A1B;--r:55% 45% 62% 38%/42% 60% 40% 58%}
+.sc:nth-child(4n){--c:#7C97F0;--ct:#101736;--r:40% 60% 48% 52%/55% 45% 55% 45%}
+.sc b,.sc span{color:var(--ct)}.sc span{font-weight:600}
+.sc:nth-child(n) .ci{background:#ffffff59;color:var(--ct)}.sc:nth-child(4n+2) .ci{background:#ffffff33}
+/* camada da massa: corpo (::before, movido pelo JS com física de mola) + 3 gotinhas */
+.sl{position:absolute;inset:0;z-index:-1;pointer-events:none;filter:drop-shadow(0 6px 10px #00000024)}
+.sl::before{content:"";position:absolute;inset:0;background:var(--c);border-radius:var(--sl-br,var(--r));transform:translate(var(--sl-tx,0px),var(--sl-ty,0px)) rotate(var(--sl-rot,0deg)) scale(var(--sl-sx,1),var(--sl-sy,1)) rotate(calc(var(--sl-rot,0deg)*-1))}
+.sl i{position:absolute;border-radius:50%;background:var(--c);translate:var(--sl-dx,0px) var(--sl-dy,0px);transition:transform .5s var(--sp)}
+.sl i:nth-child(1){width:18px;height:18px;right:-6px;top:14%}
+.sl i:nth-child(2){width:12px;height:12px;left:12%;bottom:-8px}
+.sl i:nth-child(3){width:8px;height:8px;right:26%;bottom:-11px}
+/* ativo (mouse em cima, foco ou toque): o filtro #goo cola as gotas na massa e elas flutuam */
+.sc.on,.sc:hover,.sc:focus-visible{transform:scale(1.03);box-shadow:none;border-color:transparent}
+.sc.on .sl,.sc:hover .sl,.sc:focus-visible .sl{filter:url(#goo) drop-shadow(0 12px 16px #0000003d)}
+.sc.on .sl i:nth-child(1){animation:gota1 1.9s ease-in-out infinite}
+.sc.on .sl i:nth-child(2){animation:gota2 2.3s ease-in-out infinite}
+.sc.on .sl i:nth-child(3){animation:gota3 1.6s ease-in-out infinite}
+.sc.pr .sl i{animation:none;transform:scale(1.7)}
+@keyframes gota1{50%{transform:translate(9px,-7px) scale(1.35)}}
+@keyframes gota2{50%{transform:translate(-7px,9px) scale(1.45)}}
+@keyframes gota3{50%{transform:translate(5px,12px) scale(1.6)}}
+.sc:focus-visible{outline:3px solid var(--hi);outline-offset:6px;border-radius:28px}
+/* entrada "plop" em sequência e respiração leve (só onde existe mouse) */
+.rv.in .sc{animation:plop .8s var(--sp) backwards}
+.rv.in .sc:nth-child(2){animation-delay:.06s}.rv.in .sc:nth-child(3){animation-delay:.12s}.rv.in .sc:nth-child(4){animation-delay:.18s}
+.rv.in .sc:nth-child(5){animation-delay:.24s}.rv.in .sc:nth-child(6){animation-delay:.3s}.rv.in .sc:nth-child(n+7){animation-delay:.36s}
+@keyframes plop{0%{transform:scale(.4) translateY(16px);opacity:0}55%{opacity:1}70%{transform:scale(1.07) translateY(-3px)}100%{transform:none}}
+@media (hover:hover) and (pointer:fine){.sc:not(.on) .sl{animation:respira 6s ease-in-out infinite}.sc:nth-child(2n) .sl{animation-delay:-2s}.sc:nth-child(3n) .sl{animation-delay:-4s}}
+@keyframes respira{50%{transform:scale(1.02,.985)}}
+/* espaço reservado para as ilustrações dos cards camarão e azul (um blob suave atrás da imagem) */
+.dc.t1,.dc.t2{isolation:isolate}
+.dc.t1::before,.dc.t2::before{content:"";position:absolute;z-index:-1;right:8px;bottom:8px;width:40%;aspect-ratio:1;border-radius:60% 40% 55% 45%/50% 60% 40% 50%;background:#ffffff47}
+.dc.t2::before{background:#ffffff26;border-radius:45% 55% 40% 60%/58% 42% 58% 42%}
+@media(prefers-reduced-motion:reduce){.sc,.sl i{transition:none!important}.sc .sl,.sc .sl i,.rv.in .sc{animation:none!important}.sc.on .sl,.sc:hover .sl,.sc:focus-visible .sl{filter:none}}
+/* clique nos cards de técnicas: amassa, balança e solta gotinhas (a troca de tela espera ~460ms, ver slime() no app.js) */
+.sc.splat .sl{animation:splat .5s cubic-bezier(.3,.7,.4,1) both}
+.sc.splat .ci{animation:splatci .5s var(--sp) both}
+@keyframes splat{0%{transform:none}16%{transform:scale(1.16,.78)}36%{transform:scale(.88,1.16)}56%{transform:scale(1.07,.95)}76%{transform:scale(.98,1.03)}100%{transform:none}}
+@keyframes splatci{0%{transform:none}16%{transform:scale(1.2,.8)}40%{transform:scale(.9,1.15) translateY(-3px)}100%{transform:none}}
+.sb{position:absolute;left:50%;top:50%;width:0;height:0;z-index:-1;pointer-events:none}
+.sb i,.sbf i{position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--c);opacity:0;animation:gotinha .5s cubic-bezier(.2,.7,.3,1) forwards}
+.sb i:nth-child(1),.sbf i:nth-child(1){--dx:-64px;--dy:-44px}.sb i:nth-child(2),.sbf i:nth-child(2){--dx:0px;--dy:-58px;width:10px;height:10px}.sb i:nth-child(3),.sbf i:nth-child(3){--dx:66px;--dy:-38px}
+.sb i:nth-child(4),.sbf i:nth-child(4){--dx:-58px;--dy:42px;width:10px;height:10px}.sb i:nth-child(5),.sbf i:nth-child(5){--dx:6px;--dy:60px}.sb i:nth-child(6),.sbf i:nth-child(6){--dx:62px;--dy:40px;width:9px;height:9px}
+@keyframes gotinha{0%{opacity:1;transform:translate(0,0) scale(.3)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.1)}}
+/* logo ao lado do nome */
+.logo-w{display:block;width:auto;max-width:100%;object-fit:contain}
+
+/* rodapé */
+#ft{margin-top:40px;padding:18px 0 4px;border-top:1px solid var(--bd);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;font-size:13px;color:var(--mut)}
+#ft .fl{display:flex;flex-wrap:wrap;gap:6px 18px}
+#ft a,#ft button{color:var(--mut);font:inherit;font-weight:600;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+#ft a:hover,#ft button:hover{color:var(--tx)}
+a.btn{text-decoration:none}
+
+/* aba Estudar: cabeçalho, barra de progresso, resumo final e pergunta no verso */
+.sh{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:34px;margin-bottom:4px}
+.sh .ud{border:0;background:none;color:var(--hi);font:inherit;font-weight:800;font-size:14px;cursor:pointer;padding:6px 2px}
+.pg{height:8px;border-radius:99px;background:var(--bd);overflow:hidden;margin-bottom:12px}
+.pg i{display:block;height:100%;border-radius:99px;background:var(--ok);animation:pgIn .6s cubic-bezier(.3,.8,.3,1)}
+@keyframes pgIn{from{width:var(--from)}}
+.bq{width:100%;padding-bottom:10px;margin-bottom:2px;border-bottom:1px solid var(--bd);font-size:14px;font-weight:500;color:var(--mut);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sum{display:flex;gap:8px;width:100%;margin-top:10px}
+.sum div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border-radius:12px;background:var(--soft);font-size:20px;font-weight:800}
+.sum span{font-size:12px;font-weight:600;color:var(--mut)}
+.sbf{position:fixed;width:0;height:0;z-index:60;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.pg i{animation:none}}
+
+/* 13. REVISÃO: treino livre e ações do cartão -------------------------- */
+.rates.two{grid-template-columns:1fr 1fr}.rates.two .btn{flex-direction:row;padding:14px}
+.cact{display:flex;gap:8px;margin-top:12px}
+.cact button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--bd);background:none;color:var(--mut);font:inherit;font-size:13px;font-weight:700;border-radius:14px;padding:10px 6px;cursor:pointer}
+.cact button:hover,.cact button:focus-visible{color:var(--tx);background:var(--soft)}
