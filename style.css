@@ -408,3 +408,88 @@ a.btn{text-decoration:none}
 .cact{display:flex;gap:8px;margin-top:12px}
 .cact button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--bd);background:none;color:var(--mut);font:inherit;font-size:13px;font-weight:700;border-radius:14px;padding:10px 6px;cursor:pointer}
 .cact button:hover,.cact button:focus-visible{color:var(--tx);background:var(--soft)}
+
+/* Quiz: abas Treino/Simulado, prova com cronômetro, revisão com explicação do erro */
+.seg{display:flex;gap:4px;padding:4px;margin-bottom:12px;border-radius:14px;background:var(--soft);border:1px solid var(--bd)}
+.seg button{flex:1;border:0;border-radius:10px;padding:10px;background:none;color:var(--mut);font:inherit;font-weight:800;cursor:pointer}
+.seg button.on{background:var(--card);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.sim-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.simt{font-weight:800;font-variant-numeric:tabular-nums;padding:4px 12px;border-radius:99px;background:var(--soft)}
+.simt.low{background:color-mix(in srgb,var(--no) 40%,var(--card))}
+.opt.sel{border-color:var(--hi);background:color-mix(in srgb,var(--hi) 22%,var(--card))}
+.simmap{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 12px}
+.simmap button{width:38px;height:38px;border-radius:10px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-weight:700;cursor:pointer}
+.simmap button.done{background:color-mix(in srgb,var(--hi) 28%,var(--card));border-color:var(--hi)}
+.simmap button.cur{outline:2px solid var(--tx);outline-offset:2px}
+.sh1{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.sh1:last-child{border:0}.sh1 span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut)}
+.sri{padding:12px 0}.sri summary{font-weight:700;list-style:none;cursor:pointer}.sri summary::-webkit-details-marker{display:none}
+.sri .ico{display:inline-block;width:22px;font-weight:900}.sri.ok .ico{color:var(--ok)}.sri.bad .ico{color:var(--no)}.sri.blank .ico{color:var(--mut)}
+.ro{padding:10px 12px;margin:6px 0;border:2px solid var(--bd);border-radius:12px;font-weight:600}
+.ro.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 25%,var(--card))}
+.ro.wrong{border-color:var(--no);background:color-mix(in srgb,var(--no) 25%,var(--card))}
+.ro small{font-weight:500;color:var(--mut)}
+.why{margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--soft);font-size:14px;line-height:1.5}
+.why div+div{margin-top:6px}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+/* 14. MOLDI, O PET ------------------------------------------------- */
+.pet{width:min(180px,44%);flex:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pet-svg{display:block;width:100%;height:auto;overflow:visible;scale:var(--ps,1);transform-origin:50% 92%;animation:pbr 4.5s ease-in-out infinite}
+.pe{transform-box:fill-box;transform-origin:center;animation:pbl 5s infinite}
+.pet.cheer .pet-svg{animation:pcheer .7s var(--sp) 2}
+.pet.jl .pet-svg{animation:pjel .6s var(--sp)}
+.psp{transform-box:fill-box;transform-origin:center;animation:pspk 1.6s ease-in-out infinite}
+.pzz{animation:pzz 2.4s ease-in-out infinite}
+@keyframes pbr{50%{transform:scale(1.03,.97)}}
+@keyframes pbl{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes pcheer{0%,100%{transform:none}40%{transform:translateY(-12px) scale(.95,1.06)}70%{transform:scale(1.06,.94)}}
+@keyframes pjel{0%{transform:scale(.92,1.08)}35%{transform:scale(1.08,.93)}65%{transform:scale(.98,1.03)}100%{transform:none}}
+@keyframes pspk{50%{transform:scale(1.35) rotate(18deg);opacity:.7}}
+@keyframes pzz{50%{transform:translateY(-5px);opacity:.5}}
+.pet-card{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:14px 18px;margin:0 0 18px;cursor:pointer}
+.pet-card .pet{width:92px;cursor:inherit}.pet-card .pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.pet-card:hover{border-color:var(--hi)}.pet-card:focus-visible{outline:3px solid var(--hi);outline-offset:3px}
+.pet-card b{font-size:17px}.pet-card .pt>span{font-size:13px}
+.xpb{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}.xpb i{display:block;height:100%;border-radius:99px;background:var(--ok);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.pet-main{flex-direction:row;align-items:center;gap:18px}.pet-main .pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.pet-main h2{margin:0}
+.pchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}.pchips span{background:var(--soft);border-radius:99px;padding:4px 12px;font-size:13px;font-weight:700}
+.pmsg{margin:4px 0 0;font-size:14px;font-style:italic}
+.mis{list-style:none;margin:8px 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.mis li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--soft);border-radius:14px;padding:10px 14px;font-weight:600}
+.mis li>span{display:flex;align-items:center;gap:8px}.mis li.ok{background:color-mix(in srgb,var(--ok) 24%,var(--soft))}.mis small{color:var(--mut);font-weight:700}
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:6px}
+.shp{background:var(--soft);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:4px}.shp.on{outline:2px solid var(--ok)}
+.shp .btn{margin-top:6px;padding:10px}.shp .btn:disabled{opacity:.45;cursor:not-allowed}
+.xpf{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--ok);color:var(--onp);font-weight:800;padding:8px 16px;border-radius:99px;box-shadow:var(--sh);z-index:30;pointer-events:none;animation:xpf 1.3s ease-out forwards}
+@keyframes xpf{0%{opacity:0;transform:translate(-50%,10px) scale(.8)}20%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-34px)}}
+@media(max-width:420px){.pet-main{flex-direction:column;align-items:center;text-align:center}.pet-main .pt{align-items:center}.pet-main .pet{width:min(220px,70%)}}
+@media(prefers-reduced-motion:reduce){.pet-svg,.pe,.psp,.pzz,.pet.cheer .pet-svg,.pet.jl .pet-svg,.xpb i{animation:none!important;transition:none!important}}
+
+/* Plano de estudos */
+.pds{display:flex;flex-direction:column;gap:6px;margin:8px 0 12px}
+.pd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 12px;border:2px solid var(--bd);border-radius:12px;background:var(--card)}
+.pd.on{border-color:var(--hi)}
+.pd label{display:flex;align-items:center;gap:10px;font-weight:700;flex:1}
+.pd select{width:auto;min-width:104px;margin:0;padding:8px 10px}
+.pd input[type=checkbox],.tk input{width:20px;height:20px;margin:0;padding:0;flex:none;accent-color:var(--hi)}
+.pw{margin:14px 0 2px;font-size:13px;font-weight:700}
+.tkr{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin:6px 0}
+.tk{display:flex;align-items:flex-start;gap:10px;flex:1;min-width:0;line-height:1.4}
+.tk.on span{text-decoration:line-through;color:var(--mut)}
+.tpk{display:inline-block;padding:1px 7px;border-radius:99px;background:var(--soft);color:var(--mut);font-size:11px;font-weight:700;text-decoration:none}
+.tkr .chip{flex:none;padding:5px 10px;font-size:12px}
+.ptp{margin:4px 0 0;padding-left:20px}.ptp li{margin:2px 0}
+.late-t{color:var(--no);font-weight:800}
+.pl-ok .ico{color:var(--ok)}.pl-late .ico{color:var(--no)}.pl-now .ico{color:var(--hi)}.pl-sk .ico,.pl-fut .ico{color:var(--mut)}
+.pl-hoje{border-color:var(--hi)}.pl-lt{border-color:var(--no)}
+.pl-home .bar{margin:8px 0}
+
+/* Moldi no canto da tela (some na aba Moldi) */
+#pw{position:fixed;left:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;flex-direction:column;align-items:flex-start;gap:8px;pointer-events:none}
+#pw[hidden],#ps[hidden]{display:none}
+#pw>*{pointer-events:auto}
+#pw .pet{width:78px}
+@media(min-width:900px){#pw .pet{width:96px}}
+#ps{max-width:220px;background:var(--tx);color:var(--bg);padding:8px 12px;border-radius:14px 14px 14px 4px;font-size:13px;font-weight:600;box-shadow:var(--sh);animation:rise .3s var(--sp)}
+.ptest .chip{padding:5px 10px;font-size:12px;cursor:pointer}
